@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Wrapinfo = styled.div`
+    margin-top: 10%;
     background-color: #2c3d50;
     width: 100%;
     height: 35%;
