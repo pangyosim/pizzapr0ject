@@ -66,7 +66,7 @@ public class TransController {
         // 1. URL을 만들기 위한 StringBuilder.
         StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B190021/totBrStateInq/gettotBrStateInq"); /*URL*/
         // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=Is8OYneAatrDOxbNCsmisrDM2Mr5%2FI3QgOj%2FKFDEio44kM4%2BxjseKNqDsO7eFpdc8OdJt%2BUkShitVzwFjXrexQ%3D%3D"); /*Service Key*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "="); /*Service Key*/
         // 3. URL 객체 생성.
         URL url = new URL(urlBuilder.toString());
         // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
@@ -103,7 +103,7 @@ public class TransController {
 
     public JSONObject trans_brcd(String brcd) throws IOException, ParseException {
         StringBuilder brcdBuilder = new StringBuilder("http://apis.data.go.kr/B190021/branchinfo/details"); /*URL*/
-        brcdBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=Is8OYneAatrDOxbNCsmisrDM2Mr5%2FI3QgOj%2FKFDEio44kM4%2BxjseKNqDsO7eFpdc8OdJt%2BUkShitVzwFjXrexQ%3D%3D"); /*Service Key*/
+        brcdBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "="); /*Service Key*/
         brcdBuilder.append("&" + URLEncoder.encode("brcd","UTF-8") + "=" + URLEncoder.encode(brcd, "UTF-8")); /*부점코드를 조회하고자 하는 부점의 한글명*/
         URL brcd_url = new URL(brcdBuilder.toString());
         HttpURLConnection brcd_conn = (HttpURLConnection) brcd_url.openConnection();
@@ -137,8 +137,8 @@ public class TransController {
         JSONObject res_obj = new JSONObject();
         StringBuilder html = new StringBuilder();
         String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + address; // encodeURIComponent로 인코딩 된 주소
-        String clientId = "4hv6mnsc4i";
-        String clientSecret = "0Xijy8ntb7JcOIrEVlf77b4a2RppgcCPtL5f3F7e";
+        String clientId = "";
+        String clientSecret = "";
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
         request.addHeader("X-NCP-APIGW-API-KEY-ID", clientId);  //해더에 Clinet Id와 Client Secret을 넣습니다
