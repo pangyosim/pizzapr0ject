@@ -1,0 +1,48 @@
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>간단한 지도 표시하기</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=4hv6mnsc4i"></script>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=4hv6mnsc4i&submodules=geocoder"></script>
+</head>
+<body>
+<div id="map" style="width:50%;height:400px; margin: 10% auto; border-radius: 20px;"></div>
+
+<script>
+    var map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.337878960, 127.102864848), //지도의 초기 중심 좌표
+        zoom: 16, //지도의 초기 줌 레벨
+        minZoom: 7, //지도의 최소 줌 레벨
+        zoomControl: true, //줌 컨트롤의 표시 여부
+        zoomControlOptions: { //줌 컨트롤의 옵션
+            style: naver.maps.ZoomControlStyle.SMALL,
+            position: naver.maps.Position.TOP_RIGHT
+        }
+    });
+    var infoWindow = new naver.maps.InfoWindow();
+
+    var marker = new naver.maps.Marker({
+        position: map.getCenter(),
+        map: map,
+        clickable: true
+    });
+
+    naver.maps.Event.addListener(marker, "click", function () {
+        infoWindow.setContent(getContentElement('DEFAULT MARKER'));
+        infoWindow.open(map, marker);
+    });
+
+    map.setOptions("mapTypeControl", true); //지도 유형 컨트롤의 표시 여부
+
+    // 지도의 옵션 참조는 init 이벤트 이후에 참조해야 합니다.
+    naver.maps.Event.once(map, 'init', function () {
+        console.log('올바른 참조 시점', map.getOptions('minZoom') === 10);
+    });
+    function getContentElement(titleString) {
+        return '<div style="padding:20px;">' + titleString + '</div>';
+    }
+</script>
+</body>
+</html>
