@@ -21,4 +21,9 @@ public class BankaddrServiceImpl implements BankaddrService {
     public void insertBankaddr(Bankaddr Bankaddr) {
         Bankaddrrepo.save(Bankaddr);
     }
+
+    @Override
+    public Bankaddr findByBrcd(String brcd) {
+        return Bankaddrrepo.findByBrcd(brcd);
+    }
 }

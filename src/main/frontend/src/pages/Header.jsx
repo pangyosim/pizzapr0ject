@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import categoryimg from '../img/category.png';
-import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
     padding: 30px;
@@ -33,9 +32,7 @@ const Header = () => {
             <Atag href="">Bookmark</Atag>
             <Atag href="/">Login</Atag>
             <Atag href="/"> Home</Atag>
-            <NavLink to={"/map"}>
-                <Imgtag src={categoryimg}></Imgtag>
-            </NavLink>
+            <Imgtag src={categoryimg}></Imgtag>
         </Wrapper>
     )
 }

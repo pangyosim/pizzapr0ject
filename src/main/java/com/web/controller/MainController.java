@@ -7,6 +7,8 @@ import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -25,16 +27,21 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@PropertySource("classpath:application.properties")
 public class MainController {
 
     @Autowired
     private BankaddrService bas;
+
+    @Value("${openapi.servicekey}")
+    private String servicekey;
+
     @GetMapping("/map")
     public List<Bankaddr> mappage() throws IOException, ParseException {
         // 1. URL을 만들기 위한 StringBuilder.
         StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B190021/totBrStateInq/gettotBrStateInq"); /*URL*/
         // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=Is8OYneAatrDOxbNCsmisrDM2Mr5%2FI3QgOj%2FKFDEio44kM4%2BxjseKNqDsO7eFpdc8OdJt%2BUkShitVzwFjXrexQ%3D%3D"); /*Service Key*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + servicekey); /*Service Key*/
         // 3. URL 객체 생성.
         URL url = new URL(urlBuilder.toString());
         // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.

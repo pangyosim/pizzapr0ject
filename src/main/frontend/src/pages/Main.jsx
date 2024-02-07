@@ -8,6 +8,7 @@ import Parkingfind from "../components/Parkingfind";
 import QA from "../components/QA";
 import CustomerService from "../components/CustomerService";
 import Sitemap from "../components/Sitemap";
+import { NavLink } from "react-router-dom";
 //------------------------------------------------------------------------------------------
 // Main div box
 const Wrapper = styled.div`
@@ -44,6 +45,11 @@ const Wrapdiv = styled.div`
     display: flex;
 `;
 
+const Navstyle = styled(NavLink)`
+    text-decoration: none;
+    margin-left: 3%;
+`;
+
 
 //------------------------------------------------------------------------------------------
 
@@ -64,8 +70,12 @@ const Main = () => {
                 <CenterBox>
                     <Inform/>
                     <Wrapdiv>
-                        <Bankfind/>
-                        <Parkingfind/>
+                        <Navstyle to="/map">
+                            <Bankfind/>
+                        </Navstyle>
+                        <Navstyle to="/">
+                            <Parkingfind/>
+                        </Navstyle>
                     </Wrapdiv>
                     <Wrapdiv>
                         <QA/>

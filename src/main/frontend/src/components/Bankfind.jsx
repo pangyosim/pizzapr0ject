@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const Wrapdiv = styled.div`
-    width: 40%;
+    width: 106%;
     height: 130px;
-    margin-top: 7%;
+    margin-top: 19%;
     margin-left: 6.5%;
     background-color: #2980b9;
     cursor: pointer;
@@ -17,13 +17,14 @@ const Findbankp = styled.p`
     font-size: 20px;
     font-weight: bold;
     color: white;
-    padding: 5px 15px;
+    padding: 25px 15px 0;
 `;
 
 const Findbanksub = styled.p`
     font-size: 15px;
     color: white;
     font-weight: bold;
+    padding-top: 7px;
     margin-left: 15px;
 `;
 
