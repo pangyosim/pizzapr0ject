@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service; 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,26 +29,6 @@ public class QnAService {
 		return qnaRepository.findAll(); 
 	}
 	
-    public QnAService(QnARepository qnaRepository) {
-        this.qnaRepository = qnaRepository;
-    }
-
-    @Transactional(readOnly = true)
-    public Page<QnA> findAll(Pageable pageable) {
-        return qnaRepository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<QnA> findByQaTitleContaining(String qaTitle, Pageable pageable) {
-        return qnaRepository.findByQaTitleContaining(qaTitle, pageable);
-    }
-    
-    @Transactional(readOnly = true)
-    public Page<QnA> findByQaUserIdContaining(String qaUserId, Pageable pageable) {
-        return qnaRepository.findByQaUserIdContaining(qaUserId, pageable);
-    }
-
-		
 	// QnA 상세보기 
 	@Transactional 
 	public QnA deTail(int qaSeq) { 

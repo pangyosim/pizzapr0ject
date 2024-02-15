@@ -1,9 +1,6 @@
 package com.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus; 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Sort;
 
 import com.web.repo.QnA;
 import com.web.repo.Reply;
@@ -44,22 +39,6 @@ public class QnAController {
 	public ResponseEntity<?> findAll() { 
 		return new ResponseEntity<>(qnaService.findAll(), HttpStatus.OK); 
 	}
-    // QnA 전체 리스트 및 검색 출력
-    @GetMapping("/qna/search")
-    public ResponseEntity<Page<QnA>> findAll(@RequestParam(required = false) String qaTitle,
-                                             @RequestParam(required = false) String qaUserId,
-                                             @PageableDefault(page = 0, size = 5, sort = "qaSeq",direction = Sort.Direction.DESC)Pageable pageable) {
-    	Page<QnA> qnaPage;
-    	if (qaTitle != null && !qaTitle.isEmpty()) {
-    		qnaPage = qnaService.findByQaTitleContaining(qaTitle, pageable);
-        }else if(qaUserId != null && !qaUserId.isEmpty()) {
-        	qnaPage = qnaService.findByQaUserIdContaining(qaUserId, pageable);
-        } else {
-        	qnaPage = qnaService.findAll(pageable);
-        }
-    	return new ResponseEntity<>(qnaPage, HttpStatus.OK);
-    }
-
 	
 	// QnA 상세보기
 	@CrossOrigin 
