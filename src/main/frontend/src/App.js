@@ -27,6 +27,7 @@ const App = () => {
         <Route path='/qna/:qaSeq' element={<QnADetail/>}/>
         <Route path='/qnaUpdate/:qaSeq' element={<QnAUpdate/>}/>
         <Route path='/reply' element={<Reply/>}/>
+        
         <Route path='/reviewList' element={<ReviewList/>}/>
         <Route path='/reviewWrite' element={<ReviewWrite/>}/>
 

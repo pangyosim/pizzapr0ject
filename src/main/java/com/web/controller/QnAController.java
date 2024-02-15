@@ -92,7 +92,10 @@ public class QnAController {
 		return new ResponseEntity<>(replyService.replyDelete(replySeq), HttpStatus.OK); 
 	} 
 	
-	
+	@GetMapping("/reply/count/{qaSeq}") 
+	public ResponseEntity<Integer> countRepliesByQaSeq(@PathVariable int qaSeq) { 
+	    return new ResponseEntity<>(replyService.countRepliesByQaSeq(qaSeq), HttpStatus.OK); 
+	} 
 	
 	
 	

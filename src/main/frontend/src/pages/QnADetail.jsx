@@ -21,7 +21,6 @@ const QnADetail = () => {
     });
 
     useEffect(() => {
-      console.log(qaSeq);
     fetch("http://localhost:8080/qna/" + qaSeq)
     .then((res) => {
         if (!res.ok) {
@@ -275,31 +274,37 @@ const QnADetail = () => {
                 <h3>댓글 리스트</h3>
             </div>
             <div>
-                {Array.isArray(replys) && replys.map((reply) => (
+                {replys.length === 0 ? (
+                    // 댓글이 없는 경우
+                    <p>댓글이 없습니다.</p>
+                ) : (
+                    // 댓글이 있는 경우
+                    replys.map((reply) => (
                     <ul key={reply.replySeq}>
-                    <ReplyItem reply={reply}/>
-                    {isEditing[reply.replySeq] && (
-                     <div>
-                     <Textarea
-                       rows={2}
-                       name="replyContents"
-                       onChange={handleContentChange}
-                       value={editedContent}
-                     />
-                     <Button onClick={() => handleReplyUpdate(reply)}>완료</Button>
-                     <Button onClick={cancelEditing}>취소</Button>
-                   </div>
+                        <ReplyItem reply={reply}/>
+                        {/* 수정, 삭제 기능 */}
+                        {isEditing[reply.replySeq] ? (
+                        // 수정 중인 경우
+                        <div>
+                            <Textarea
+                            rows={2}
+                            name="replyContents"
+                            onChange={handleContentChange}
+                            value={editedContent}
+                            />
+                            <Button onClick={() => handleReplyUpdate(reply)}>완료</Button>
+                            <Button onClick={cancelEditing}>취소</Button>
+                        </div>
+                        ) : (
+                        // 수정 중이 아닌 경우
+                        <div>
+                            <button onClick={() => startEditing(reply)}>수정</button>
+                            <button onClick={() => replyDelete(reply)}>삭제</button>
+                        </div>
+                        )}
+                    </ul>
+                    ))
                 )}
-
-                {!isEditing[reply.replySeq] && (
-                   <div>
-                     {/* 버튼을 누르면 수정할수 있게 Textarea가 활성화 */}
-                     <button onClick={() => startEditing(reply)}>수정</button>
-                     <button onClick={() => replyDelete(reply)}>삭제</button>
-                   </div>
-                 )}
-               </ul>
-                ))}
             </div>
         </Form>
     </div>

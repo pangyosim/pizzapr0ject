@@ -45,8 +45,10 @@ public class ReplyService {
 		return "delete";
 	} 
 	
-	
-	
-	
+    // QnA 글에 해당하는 댓글 개수 가져오기
+	@Transactional
+	public int countRepliesByQaSeq(int qaSeq) {
+	    return replyRepository.countByQaSeq(qaSeq);
+	}
 	
 }
