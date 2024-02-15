@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrapdiv = styled.div`
     width: 25%;
@@ -24,7 +25,7 @@ const QA = () => {
 
     return(
         <Wrapdiv>
-            <FindQAp>Q&A</FindQAp>
+            <FindQAp><Link to="/qna" style={{color:"white",textDecoration : "none" }}>Q&A</Link></FindQAp>
         </Wrapdiv>
     )
 }

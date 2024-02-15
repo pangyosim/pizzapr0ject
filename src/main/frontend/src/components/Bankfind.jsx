@@ -29,7 +29,7 @@ const Findbanksub = styled.p`
 `;
 
 const Bankfind = () => {
-
+//변경...??
     return(
         <Wrapdiv>
             <Findbankp>은행 찾기</Findbankp>

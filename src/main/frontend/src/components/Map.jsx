@@ -2,25 +2,22 @@
 import {Container as MapDiv, NaverMap, useNavermaps, useListener, Overlay } from 'react-naver-maps';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 function Marker2 ({geoy,geox,krnbrm,brncnwbscadr}) {
     const navermaps = useNavermaps();
     const [marker] = useState(() => new navermaps.Marker({
         position: { lat: geoy, lng: geox}
     }))
+    console.log(marker);
     useListener(marker, 'click', () => {window.alert(
     `
     지점명 : ${krnbrm}
     주소 : ${brncnwbscadr}
     `)
-    // getElement();
+    console.log(marker);
     })
-    // function getElement() {
-    //     return(
-    //         `<div>`
-
-    //         `</div>`
-    //     )
-    // }
+    
     return(
         <>
             <Overlay element={marker}/>
@@ -39,11 +36,13 @@ const Map = () => {
 
     })
     return(
+        <>
+        <Link to="/map"><Button variant="primary">Banking</Button></Link>
         <MapDiv
             style={{
             position: 'relative',
-            width: '100%',
-            height: '600px',
+            width: '50%',
+            height: '300px',
             borderRadius: "20px",
             }}
             >
@@ -59,6 +58,7 @@ const Map = () => {
                 ))}
             </NaverMap>
         </MapDiv>
+        </>
     );
 }
 export default Map;
