@@ -78,11 +78,7 @@ const QnAUpdate = () => {
         </div>
         <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">작성자</label>
-            <input type="text" name="qaUserId" value={QnA.qaUserId} onChange={changeValue}  readOnly className="form-control" style={{width:"900px"}}/>
-        </div>
-        <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">파일</label>
-            <input type="file" name="qaFile" value={QnA.qaFile || ''} onChange={changeValue} className="form-control" style={{width:"900px"}}/>
+            <input type="text" className="form-control" style={{width:"900px"}} readOnly value={QnA.qaUserId}/>
         </div>
         <div className="mb-3">
             <label htmlFor="exampleFormControlTextarea1" className="form-label">내용</label>

@@ -10,6 +10,7 @@ import Header from './Header';
 
 const QnADetail = () => {
     const navigate = useNavigate();
+    const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
     const { qaSeq } = useParams();
 
     const [QnA, setQnA] = useState({
@@ -35,6 +36,20 @@ const QnADetail = () => {
         console.error('Fetch error:', error);
     });
 
+    const fetchUserData = async () => {
+      try {
+          // 로그인 후 localStorage에 저장된 사용자 데이터 가져오기
+          const user = JSON.parse(localStorage.getItem('userData'));
+          if (user) {
+              setUserData(user);
+              console.log(user.role); // role 값 확인
+          }
+      } catch (error) {
+          console.error('Error fetching user data:', error);
+      }
+  };
+
+  fetchUserData();
     },[]);
 
     // 게시글 삭제하기 
@@ -45,6 +60,7 @@ const QnADetail = () => {
         .then((res) => res.text())
         .then((res) => {
         if (res === 'delete') {
+            window.history.replaceState(null, null, '/qna');
             navigate('/qna');
         } else {
             alert('삭제실패');
@@ -82,6 +98,7 @@ const QnADetail = () => {
       const changeValue = (e) => { 
         setReply({ 
           ...reply,
+          replyUserId: userData.id, // 로그인한 사용자의 ID 추가
           qaSeq: qaSeq,
           [e.target.name]: e.target.value, 
         }); 
@@ -218,23 +235,27 @@ const QnADetail = () => {
                 <Td colSpan={4}>{QnA.qaUserId}</Td>
             </Tr>
             <Tr>
-                <Th>파일</Th>
-                <Td colSpan={4}>{QnA.qaFile}</Td>
-            </Tr>
-            <Tr>
                 <Th>내용</Th>
                 <Td colSpan={4} height={100}>{QnA.qaContents}</Td>
             </Tr>
             </tbody>
         </Table>
         <Div>
-            <Button variant="warning" onClick={QnAUpdate}>
-                수정
-            </Button>
-            &nbsp;
-            <Button variant="danger" onClick={QnADelete}>
-                삭제
-            </Button>
+        {userData && ( // 사용자가 로그인되어 있을 때만 버튼 표시
+              <>
+              {(userData.role === 'ROLE_ADMIN' || userData.id === QnA.qaUserId) && ( // ROLE_ADMIN이거나 본인이 작성한 경우에만 버튼 표시
+                  <>
+                  <Button variant="warning" onClick={QnAUpdate}>
+                      수정
+                  </Button>
+                  &nbsp;
+                  <Button variant="danger" onClick={QnADelete}>
+                      삭제
+                  </Button>
+                  </>
+              )}
+              </>
+          )}
             &nbsp;
             <Button variant="primary" onClick={QnAList}>
                 목록
@@ -243,29 +264,32 @@ const QnADetail = () => {
         </form>
         {/* 댓글 작성 */}
         <Form onSubmit={submitReply}>
-            <ReplyDiv>
-                <ul>
-                    <Li>
-                        <span>작성자</span>
-                        <Input 
-                        type='text'
-                        name='replyUserId'
-                        onChange={changeValue} 
-                        value={reply.replyUserId}
-                        />
-                        <br/>
-
-                        <Textarea
-                        as="textarea" 
-                        rows={3} 
-                        name="replyContents" 
-                        onChange={changeValue}
-                        value={reply.replyContents}
-                        />
-                        <Button type="submit">글쓰기</Button>
-                    </Li>
-                </ul>
-            </ReplyDiv>
+        {userData ? ( // 사용자가 로그인되어 있는지 확인
+          <ul>
+              <Li>
+                  <Textarea
+                      as="textarea" 
+                      rows={3} 
+                      name="replyContents" 
+                      onChange={changeValue}
+                      value={reply.replyContents}
+                  />
+                  <Button type="submit">글쓰기</Button>
+              </Li>
+          </ul>
+        ) : (
+          <ul>
+              <Li>
+                  <Textarea
+                      as="textarea" 
+                      rows={3} 
+                      name="replyContents" 
+                      placeholder="로그인후 작성이 가능합니다"
+                      readOnly
+                  />
+              </Li>
+          </ul>
+        )}
         </Form>
         <br/>
         {/* 댓글 리스트 */}
@@ -298,8 +322,16 @@ const QnADetail = () => {
                         ) : (
                         // 수정 중이 아닌 경우
                         <div>
-                            <button onClick={() => startEditing(reply)}>수정</button>
-                            <button onClick={() => replyDelete(reply)}>삭제</button>
+                           {userData && ( // 사용자가 로그인되어 있을 때만 버튼 표시
+                              <>
+                              {(userData.role === 'ROLE_ADMIN' ||  userData.id === reply.replyUserId) && ( // ROLE_ADMIN이거나 본인이 작성한 경우에만 버튼 표시
+                                <>
+                                    <button onClick={() => startEditing(reply)}>수정</button>
+                                    <button onClick={() => replyDelete(reply)}>삭제</button>
+                                </>
+                            )}
+                            </>
+                           )}
                         </div>
                         )}
                     </ul>
@@ -351,10 +383,9 @@ const ReplyDiv = styled.div`
 `;
 const Li = styled.li`
     list-style-type: none;
+    padding-top: 30px;
 `;
-const Input = styled.input`
-    width: 50px;
-`;
+
 const Textarea = styled.textarea`
     width: 1150px;
 `;

@@ -12,10 +12,27 @@ const QnA = () => {
     const [postsPerPage] = useState(5); // 한 페이지 당 보여줄 게시글 수
     const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
     const [searchType, setSearchType] = useState('qaTitle'); // 검색 타입
+    const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
+
 
     useEffect(() => {
         fetchQnAData();
         fetchBoardData();
+        
+        const fetchUserData = async () => {
+            try {
+                // 로그인 후 localStorage에 저장된 사용자 데이터 가져오기
+                const user = JSON.parse(localStorage.getItem('userData'));
+                if (user) {
+                    setUserData(user);
+                    console.log(user.role); // role 값 확인
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+    
+        fetchUserData();
     }, []);
 
     const fetchQnAData = () => {
@@ -132,6 +149,7 @@ const QnA = () => {
                     </Button>
                 </Div>
                 <div style={{ paddingBottom: "70px" }}>
+                {pageNumbers.length > 0 && (
                     <nav aria-label="Page navigation example">
                         <ul className="pagination">
                             <li className="page-item">
@@ -153,6 +171,7 @@ const QnA = () => {
                             </li>
                         </ul>
                     </nav>
+                )}
                 </div>
             </Form>
         </div>

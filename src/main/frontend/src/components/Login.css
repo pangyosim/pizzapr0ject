@@ -1,0 +1,132 @@
+
+/* src/Login.css */
+.login-box{
+	width: 300px;
+	height: 300px;
+	margin: 0 auto;
+	margin-top: 13%;
+	border: none;
+    border-radius: 10px; 
+}
+.kakaologin button{
+    width: 300px;
+    background-color: #e9ca3f;
+    color: black;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px; 
+}
+.kakaologin button:hover {
+    background-color: rgb(179, 145, 8);
+}
+
+
+h2 {
+    color: #333;
+}
+
+p {
+    margin-bottom: 8px;
+}
+
+.login-box input {
+    width: 300px;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border-radius: 10px; 
+}
+
+.login {
+    width: 300px;
+    background-color: #148ade;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px; 
+}
+
+.login:hover {
+    background-color: #0056b3;
+}
+
+.loginLink{
+    color: gray;
+}
+
+a {
+    text-decoration: none;
+    
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 회원가입 CSS*/
+.input-box{
+	width: 600px;
+	height: 850px;
+	margin: 0 auto;
+	margin-top: 5%;
+	
+    background-color: rgb(213, 217, 220);
+    text-align: left;
+}
+input {
+    width: 200px;
+    height: 40px;
+    
+}
+#checkBtn{
+    border-radius: 10px;
+    width: 80px;
+    height: 30px;
+    color: white;
+    border-color: black;
+    background-color: rgb(83, 84, 84);
+}
+#checkBtn1{
+    border-radius: 10px;
+    width: 80px;
+    height: 30px;
+    color: white;
+    border-color: black;
+    background-color: rgb(83, 84, 84);
+}
+select{
+    width: 200px;
+    height: 40px;
+   
+}
+#phon1{
+    width: 90px;
+    height: 40px;
+}
+.input-group{
+    margin-left: 10%;
+    
+}
+#year1 {
+    width: 90px;
+    font-size: 12px;
+}
+#year2{
+    width:10px;
+}
+h2{
+    text-align:center;
+}
+.signup {
+    width: 200px;
+    height: 40px;
+    border-color: black;
+    color: white;
+    border-radius: 10px;
+    background-color: rgb(79, 80, 80);
+}
+
+
+/* 주차장 CSS */

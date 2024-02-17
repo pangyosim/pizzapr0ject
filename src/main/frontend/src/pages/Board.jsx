@@ -5,12 +5,15 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import BoardItem from '../components/BoardItem';
+import axios from 'axios';
 
 const Board = () => {
+    
     const [boards, setBoards] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [postsPerPage] = useState(5); // 한 페이지 당 보여줄 게시글 수  
-     
+    const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
+
     useEffect(() => { 
     fetch('http://localhost:8080/board') 
         .then((res) => res.json()) 
@@ -18,7 +21,22 @@ const Board = () => {
             const sortedBoards = res.sort((a, b) => b.boardSeq - a.boardSeq);
             setBoards(sortedBoards);
         }); 
+
+        const fetchUserData = async () => {
+            try {
+                // 로그인 후 localStorage에 저장된 사용자 데이터 가져오기
+                const user = JSON.parse(localStorage.getItem('userData'));
+                if (user) {
+                    setUserData(user);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+    
+        fetchUserData();
     }, [boards]); 
+
 
     // 현재 페이지의 게시글을 계산하는 함수
     const indexOfLastPost = currentPage * postsPerPage;
@@ -46,12 +64,15 @@ const Board = () => {
                 <BoardItem key={board.boardSeq} board={board}/>
             ))} 
         </div>
+        {userData && userData.role === 'ROLE_ADMIN' && ( // ROLE_ADMIN일 때만 버튼 표시
         <Div>
-                <Button variant="warning" style={{float:"right"}}>
+            <Button variant="warning" style={{float:"right"}}>
                 <Link to ="/boardWrite" className="nav-link">글쓰기</Link>
             </Button>
         </Div>
+        )}
         <div style={{paddingBottom: "70px"}}>
+        {pageNumbers.length > 0 && (
             <nav aria-label="Page navigation example">
                 <ul className="pagination">
                     <li className="page-item">
@@ -73,6 +94,7 @@ const Board = () => {
                     </li>
                 </ul>
             </nav>
+        )}
         </div>
         </Form>
     </div>

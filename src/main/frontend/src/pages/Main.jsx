@@ -9,6 +9,7 @@ import QA from "../components/QA";
 import CustomerService from "../components/CustomerService";
 import Sitemap from "../components/Sitemap";
 import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 //------------------------------------------------------------------------------------------
 // Main div box
 const Wrapper = styled.div`
@@ -54,6 +55,15 @@ const Navstyle = styled(NavLink)`
 //------------------------------------------------------------------------------------------
 
 const Main = () => {
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('userData'));
+        if (user) {
+            setUserData(user);
+            console.log(user);
+        }
+    }, []);
 
     return(
         <>
@@ -87,6 +97,9 @@ const Main = () => {
                     <h1>last_box</h1>
                 </LastBox>
             </Wrapper>
+            {/* {members.map((member) => ( 
+            <MemberItem key={member.id} member={member} /> 
+        ))}  */}
         </>
     )
 

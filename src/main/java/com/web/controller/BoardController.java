@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody; 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.persistence.UserRepository;
 import com.web.repo.Board;
-import com.web.repo.QnA;
-import com.web.repo.Reply;
+import com.web.repo.UserMember;
 import com.web.service.BoardService;
-import com.web.service.QnAService;
-import com.web.service.ReplyService;
+import com.web.service.UserService;
 
 @RestController 
 public class BoardController { 
  
 	@Autowired 
 	private BoardService boardService; 
-	
+
 	// Board(공지사항) 글쓰기 
 	@CrossOrigin 
 	@PostMapping("/board") 
@@ -38,7 +37,7 @@ public class BoardController {
 	public ResponseEntity<?> findAll() { 
 		return new ResponseEntity<>(boardService.findAll(), HttpStatus.OK); 
 	} 
-	
+
 	// Board(공지사항) 상세보기
 	@CrossOrigin 
 	@GetMapping("/board/{boardSeq}") 

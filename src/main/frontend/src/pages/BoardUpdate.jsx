@@ -26,6 +26,7 @@ const BoardUpdate = () => {
         .then((res) => {
             setBoard(res);
         });
+
     }, []);
 
     const changeValue = (e) => {
@@ -69,8 +70,9 @@ const BoardUpdate = () => {
     <>
     <Header/>
     <Form onSubmit={submitUpdate}>
-    <br/>
-        <h2>QnA 수정</h2>
+    <Div>
+        <h2>공지사항 수정</h2>
+    </Div>
     <br/>
         <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">제목</label>
@@ -78,11 +80,7 @@ const BoardUpdate = () => {
         </div>
         <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">작성자</label>
-            <input type="text" name="boardUserId" value={board.boardUserId} onChange={changeValue}  readOnly className="form-control" style={{width:"900px"}}/>
-        </div>
-        <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">파일</label>
-            <input type="file" name="boardFile" value={board.boardFile || ''} onChange={changeValue} className="form-control" style={{width:"900px"}}/>
+            <input type="text" className="form-control" style={{width:"900px"}} readOnly value={board.boardUserId}/>
         </div>
         <div className="mb-3">
             <label htmlFor="exampleFormControlTextarea1" className="form-label">내용</label>
@@ -104,10 +102,12 @@ const BoardUpdate = () => {
 const Form = styled.form`
     width: 1100px;
     margin-left:auto;
+    padding-left: 50px;
 `;
 const Div = styled.div`
     padding-top: 10px;
     text-align: center;
+    padding-right: 200px;
 `;
 
 export default BoardUpdate;

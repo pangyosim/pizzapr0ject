@@ -27,10 +27,18 @@ const Atag = styled.a`
 `;
 
 const Header = () => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    const handleLogout = () => {
+     // 모든 localStorage 데이터 제거
+     localStorage.clear();
+     window.location.reload();
+    };
     return(
         <Wrapper>
             <Atag href="">Bookmark</Atag>
-            <Atag href="/">Login</Atag>
+            {!isLoggedIn && <Atag href="/Login">Login</Atag>}
+            {isLoggedIn && <Atag href="#" onClick={handleLogout}>Logout</Atag>}
             <Atag href="/"> Home</Atag>
             <Imgtag src={categoryimg}></Imgtag>
         </Wrapper>

@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Header from './Header';
 
 const BoardDetail = () => {
+    const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
     const navigate = useNavigate();
     const { boardSeq } = useParams();
 
@@ -36,6 +37,20 @@ const BoardDetail = () => {
         console.error('Fetch error:', error);
     });
 
+    const fetchUserData = async () => {
+        try {
+            // 로그인 후 localStorage에 저장된 사용자 데이터 가져오기
+            const user = JSON.parse(localStorage.getItem('userData'));
+            if (user) {
+                setUserData(user);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    fetchUserData();
+
     },[]);
     
 
@@ -47,6 +62,7 @@ const BoardDetail = () => {
         .then((res) => res.text())
         .then((res) => {
         if (res === 'delete') {
+            window.history.replaceState(null, null, '/board');
             navigate('/board');
         } else {
             alert('삭제실패');
@@ -68,8 +84,8 @@ const BoardDetail = () => {
     <div>
     <Header/>
         <form>
-        <div>
-            <h2>board 상세보기</h2>
+        <div style={{textAlign:"center", paddingBottom:"50px"}}>
+            <h2>공지사항 상세보기</h2>
         </div>
         <Table>
             <tbody>
@@ -84,23 +100,23 @@ const BoardDetail = () => {
                 <Td colSpan={4}>{board.boardUserId}</Td>
             </Tr>
             <Tr>
-                <Th>파일</Th>
-                <Td colSpan={4}>{board.boardFile}</Td>
-            </Tr>
-            <Tr>
                 <Th>내용</Th>
                 <Td colSpan={4} height={100}>{board.boardContents}</Td>
             </Tr>
             </tbody>
         </Table>
         <Div>
+        {userData && userData.role === 'ROLE_ADMIN' && ( // ROLE_ADMIN일 때만 버튼 표시
             <Button variant="warning" onClick={BoardUpdate}>
                 수정
             </Button>
+        )}
             &nbsp;
+        {userData && userData.role === 'ROLE_ADMIN' && ( // ROLE_ADMIN일 때만 버튼 표시
             <Button variant="danger" onClick={BoardDelete}>
                 삭제
             </Button>
+        )}
             &nbsp;
             <Button variant="primary" onClick={BoardList}>
                 목록

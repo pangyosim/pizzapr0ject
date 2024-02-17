@@ -13,6 +13,9 @@ import BoardWrite from './pages/BoardWrite';
 import BoardDetail from './pages/BoardDetail';
 import BoardUpdate from './pages/BoardUpdate';
 import BankfindForm from './pages/BankfindForm';
+import Login from './components/user/banglogin';
+import SignupForm from './components/user/singupform';
+import ParkingInfo from './components/user/bangparking';
 
 const App = () => {
   return(
@@ -27,7 +30,7 @@ const App = () => {
         <Route path='/qna/:qaSeq' element={<QnADetail/>}/>
         <Route path='/qnaUpdate/:qaSeq' element={<QnAUpdate/>}/>
         <Route path='/reply' element={<Reply/>}/>
-        
+
         <Route path='/reviewList' element={<ReviewList/>}/>
         <Route path='/reviewWrite' element={<ReviewWrite/>}/>
 
@@ -37,6 +40,10 @@ const App = () => {
         <Route path='/boardUpdate/:boardSeq' element={<BoardUpdate/>}/>
 
         <Route path='/bankfindForm' element={<BankfindForm/>}/>
+        {/* 기홍이형 */}
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Login/singup" element={<SignupForm />} />
+        <Route path='/parkinginfo' element={<ParkingInfo/>}/> 
     </Routes>
   )
 }
