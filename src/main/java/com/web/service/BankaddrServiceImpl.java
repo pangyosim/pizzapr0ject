@@ -14,7 +14,7 @@ public class BankaddrServiceImpl implements BankaddrService {
 
     @Override
     public List<Bankaddr> getBankaddrList(Bankaddr Bankaddr) {
-        return (List<com.web.repo.Bankaddr>) Bankaddrrepo.findAll();
+        return (List<Bankaddr>) Bankaddrrepo.findAll();
     }
 
     @Override

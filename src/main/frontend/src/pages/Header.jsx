@@ -1,16 +1,8 @@
 import styled from "styled-components";
-import categoryimg from '../img/category.png';
-
+import Sidebar from "../components/Sidebar";
+import Contact from "../components/Contact";
 const Wrapper = styled.div`
-    padding: 30px;
-`;
-const Imgtag = styled.img`
-    width:35px;
-    height: 35px;
-    cursor: pointer;
-    &:hover{
-        
-    }
+    padding: 4vh;
 `;
 const Atag = styled.a`
     font-family: sans-serif;
@@ -27,12 +19,15 @@ const Atag = styled.a`
 `;
 
 const Header = () => {
+    
     return(
         <Wrapper>
+            <Sidebar width={350}>
+                <Contact/>
+            </Sidebar>
             <Atag href="">Bookmark</Atag>
             <Atag href="/">Login</Atag>
             <Atag href="/"> Home</Atag>
-            <Imgtag src={categoryimg}></Imgtag>
         </Wrapper>
     )
 }

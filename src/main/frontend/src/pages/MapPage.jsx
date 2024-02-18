@@ -1,11 +1,16 @@
 import Map from '../components/Map';
 import Header from './Header';
+import React ,{ useState } from 'react';
+import Loading from '../components/Loading'
+
 const MapPage = () => {
+    const [isloading, setisloading] = useState(false);
+    setTimeout(()=>(setisloading(true)),1000);
     return(
-        <div>
+        <>  
             <Header/>
-            <Map/>
-        </div>
+            {isloading ? <Map/> : <Loading/>}
+        </>
     )
 }
 export default MapPage;

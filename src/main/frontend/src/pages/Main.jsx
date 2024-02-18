@@ -1,7 +1,6 @@
 import Header from "./Header";
 import styled from "styled-components";
 import Aroundmybank from "../components/Aroundmybank";
-import AroundBankbox from "../components/AroundBankbox";
 import Inform from "../components/Inform";
 import Bankfind from "../components/Bankfind";
 import Parkingfind from "../components/Parkingfind";
@@ -9,34 +8,37 @@ import QA from "../components/QA";
 import CustomerService from "../components/CustomerService";
 import Sitemap from "../components/Sitemap";
 import { NavLink } from "react-router-dom";
+import Bankinfo from "../components/Bankinfo";
+
 //------------------------------------------------------------------------------------------
 // Main div box
 const Wrapper = styled.div`
-    width: 90%;
-    height: 800px;
-    margin: 10px auto;
+    width: 180vh;
+    height: 680px;
+    margin: 4vh 8vh;
 `;
 const WrapWaitBox = styled.div`
     float: left;
-    width:25%;
+    width: 55vh;
     height: 700px;
     boxSizing: border-box;
 `;
 
 const CenterBox = styled.div`
+    margin-top: 8vh;
     float: left;
-    margin-left: 5%;
-    width:35%;
+    margin-left: 7vh;
+    width: 60vh;
     height: 700px;
     boxSizing: border-box;
 `;
 
 const LastBox = styled.div`
-    border: 1px solid blue;
     float: right;
-    width:30%;
+    width: 45vh;
     height: 700px;
     boxSizing: border-box;
+    margin-right: 6vh;
 `;
 //------------------------------------------------------------------------------------------
 // wrap
@@ -47,7 +49,7 @@ const Wrapdiv = styled.div`
 
 const Navstyle = styled(NavLink)`
     text-decoration: none;
-    margin-left: 3%;
+    margin-left: 1vh;
 `;
 
 
@@ -60,15 +62,9 @@ const Main = () => {
             <Header/>
             <Wrapper>
                 <WrapWaitBox>  
-                    <Aroundmybank/>
-                    <AroundBankbox/>
-                    <AroundBankbox/>
-                    <AroundBankbox/>
-                    <AroundBankbox/>
-                    <AroundBankbox/>
+                    <Inform/>
                 </WrapWaitBox>
                 <CenterBox>
-                    <Inform/>
                     <Wrapdiv>
                         <Navstyle to="/map">
                             <Bankfind/>
@@ -84,7 +80,12 @@ const Main = () => {
                     </Wrapdiv>
                 </CenterBox>
                 <LastBox>
-                    <h1>last_box</h1>
+                    <Navstyle to="/map">
+                        <Aroundmybank/>
+                    </Navstyle>
+                    <Navstyle to="/map">
+                        <Bankinfo/>
+                    </Navstyle>
                 </LastBox>
             </Wrapper>
         </>

@@ -117,7 +117,8 @@ public class TransController {
         // 1. 문자열 형태의 JSON을 파싱하기 위한 JSONParser 객체 생성.
         JSONParser parser = new JSONParser();
         // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장.
-        JSONObject obj = (JSONObject)parser.parse(sb.toString());
+        Object ob = parser.parse(sb.toString());
+        JSONObject obj = (JSONObject)ob;
         // 3. 필요한 리스트 데이터 부분만 가져와 JSONArray로 저장.
         return (JSONArray) obj.get("brcdList");
     }
@@ -196,89 +197,89 @@ public class TransController {
         }
         return res_obj;
     }
-    @Scheduled( zone = "Asia/Seoul", cron = "0 0/20 9-17 * * 1-6")
-    public void insertwait() throws IOException, ParseException {
-        System.out.println("Scheduled test ");
-        // 1. URL을 만들기 위한 StringBuilder.
-        StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B190021/totBrStateInq/gettotBrStateInq"); /*URL*/
-        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + servicekey); /*Service Key*/
-        // 3. URL 객체 생성.
-        URL url = new URL(urlBuilder.toString());
-        // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        // 5. 통신을 위한 메소드 SET.
-        conn.setRequestMethod("GET");
-        // 6. 통신을 위한 Content-type SET.
-        conn.setRequestProperty("Content-type", "application/json");
-        // 7. 통신 응답 코드 확인.
-        System.out.println("Response code: " + conn.getResponseCode());
-        // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        // 10. 객체 해제.
-        rd.close();
-        conn.disconnect();
-        // 1. 문자열 형태의 JSON을 파싱하기 위한 JSONParser 객체 생성.
-        JSONParser parser = new JSONParser();
-        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장.
-        JSONObject obj = (JSONObject)parser.parse(sb.toString());
-        // 3. 필요한 리스트 데이터 부분만 가져와 JSONArray로 저장.
-        JSONArray wait_arr = (JSONArray) obj.get("brcdList");
-        if (wait_arr.size() > 1){
-            for(Object o : wait_arr){
-                Waitrepo wao = new Waitrepo();
-                JSONObject tmp = (JSONObject) o;
-                wao.setBrcd(tmp.get("brcd").toString());
-                JSONArray tlwnList = (JSONArray) tmp.get("tlwnList");
-                System.out.println(tlwnList.toString());
-                String[] arr = new String[5];
-                String[] waitpeople = new String[5];
-                for(int i=0; i<tlwnList.size();i++){
-                    JSONObject ot = (JSONObject) tlwnList.get(i);
-                    arr[i] = ot.get("trwnTgn").toString();
-                    waitpeople[i] = ot.get("waitCusCnt").toString();
-                }
-                System.out.println(Arrays.toString(arr));
-                System.out.println(Arrays.toString(waitpeople));
-                wao.setTrwntgn1(arr[0]);
-                wao.setTrwntgn2(arr[1]);
-                wao.setTrwntgn3(arr[2]);
-                wao.setTrwntgn4(arr[3]);
-                wao.setTrwntgn5(arr[4]);
-
-                wao.setWaitpeople1(waitpeople[0]);
-                wao.setWaitpeople2(waitpeople[1]);
-                wao.setWaitpeople3(waitpeople[2]);
-                wao.setWaitpeople4(waitpeople[3]);
-                wao.setWaitpeople5(waitpeople[4]);
-
-
-                ZoneId zone = ZoneId.of("Asia/Seoul");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                String time = ZonedDateTime.now(zone).format(formatter);
-                wao.setCreateday(time);
-                System.out.println(wao.toString());
-                Bankaddr ba = bas.findByBrcd(tmp.get("brcd").toString());
-                wao.setAddr(ba.getBrncnwbscadr());
-
-                System.out.println(wao.toString());
-
-                was.insertwait(wao);
-                System.out.println("waitpeople Scheduled : " + wao);
-            }
-        } else {
-            System.out.println("영업시간이 아닙니다.");
-        }
-    }
+//    @Scheduled( zone = "Asia/Seoul", cron = "0 0/20 9-17 * * 1-6")
+//    public void insertwait() throws IOException, ParseException {
+//        System.out.println("Scheduled test ");
+//        // 1. URL을 만들기 위한 StringBuilder.
+//        StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B190021/totBrStateInq/gettotBrStateInq"); /*URL*/
+//        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
+//        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + servicekey); /*Service Key*/
+//        // 3. URL 객체 생성.
+//        URL url = new URL(urlBuilder.toString());
+//        // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
+//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//        // 5. 통신을 위한 메소드 SET.
+//        conn.setRequestMethod("GET");
+//        // 6. 통신을 위한 Content-type SET.
+//        conn.setRequestProperty("Content-type", "application/json");
+//        // 7. 통신 응답 코드 확인.
+//        System.out.println("Response code: " + conn.getResponseCode());
+//        // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
+//        BufferedReader rd;
+//        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+//            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//        } else {
+//            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+//        }
+//        // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
+//        StringBuilder sb = new StringBuilder();
+//        String line;
+//        while ((line = rd.readLine()) != null) {
+//            sb.append(line);
+//        }
+//        // 10. 객체 해제.
+//        rd.close();
+//        conn.disconnect();
+//        // 1. 문자열 형태의 JSON을 파싱하기 위한 JSONParser 객체 생성.
+//        JSONParser parser = new JSONParser();
+//        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장.
+//        JSONObject obj = (JSONObject)parser.parse(sb.toString());
+//        // 3. 필요한 리스트 데이터 부분만 가져와 JSONArray로 저장.
+//        JSONArray wait_arr = (JSONArray) obj.get("brcdList");
+//        if (wait_arr.size() > 1){
+//            for(Object o : wait_arr){
+//                Waitrepo wao = new Waitrepo();
+//                JSONObject tmp = (JSONObject) o;
+//                wao.setBrcd(tmp.get("brcd").toString());
+//                JSONArray tlwnList = (JSONArray) tmp.get("tlwnList");
+//                System.out.println(tlwnList.toString());
+//                String[] arr = new String[5];
+//                String[] waitpeople = new String[5];
+//                for(int i=0; i<tlwnList.size();i++){
+//                    JSONObject ot = (JSONObject) tlwnList.get(i);
+//                    arr[i] = ot.get("trwnTgn").toString();
+//                    waitpeople[i] = ot.get("waitCusCnt").toString();
+//                }
+//                System.out.println(Arrays.toString(arr));
+//                System.out.println(Arrays.toString(waitpeople));
+//                wao.setTrwntgn1(arr[0]);
+//                wao.setTrwntgn2(arr[1]);
+//                wao.setTrwntgn3(arr[2]);
+//                wao.setTrwntgn4(arr[3]);
+//                wao.setTrwntgn5(arr[4]);
+//
+//                wao.setWaitpeople1(waitpeople[0]);
+//                wao.setWaitpeople2(waitpeople[1]);
+//                wao.setWaitpeople3(waitpeople[2]);
+//                wao.setWaitpeople4(waitpeople[3]);
+//                wao.setWaitpeople5(waitpeople[4]);
+//
+//
+//                ZoneId zone = ZoneId.of("Asia/Seoul");
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+//                String time = ZonedDateTime.now(zone).format(formatter);
+//                wao.setCreateday(time);
+//                System.out.println(wao.toString());
+//                Bankaddr ba = bas.findByBrcd(tmp.get("brcd").toString());
+//                wao.setAddr(ba.getBrncnwbscadr());
+//
+//                System.out.println(wao.toString());
+//
+//                was.insertwait(wao);
+//                System.out.println("waitpeople Scheduled : " + wao);
+//            }
+//        } else {
+//            System.out.println("영업시간이 아닙니다.");
+//        }
+//    }
 }

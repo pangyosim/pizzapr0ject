@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
 const Wrapinfo = styled.div`
-    margin-top: 10%;
+    margin-top: 4vh;
     background-color: #2c3d50;
-    width: 100%;
-    height: 35%;
+    width: 55vh;
+    height: 73vh;
 `;
 const Headerinfo = styled.div`
-    padding: 3% 5%;
+    padding: 3vh 4vh;
 `;
 const Headerinfospan = styled.span`
     cursor: pointer;
     color: white;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
     &:hover{
         text-decoration: underline;
     }
@@ -21,7 +21,8 @@ const Headerinfospan = styled.span`
 const Headerinfomore = styled.span`
     float: right;
     color: white;
-    font-size: 10px;
+    margin-top: 1.2vh;
+    font-size: 15px;
     cursor: pointer;
     &:hover{
         text-decoration: underline;

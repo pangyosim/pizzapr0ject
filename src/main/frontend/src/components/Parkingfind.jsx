@@ -1,31 +1,35 @@
 import styled from "styled-components";
 
 const Wrapdiv = styled.div`
-    width: 105%;
-    height: 130px;
-    margin-top: 18%;
-    margin-left: 30%;
+    width: 28vh;
+    height: 35vh;
+    margin-top: 6vh;
     background-color: #2980b9;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 15px;
+    transition: 0.1s linear;
     &:hover{
         background-color: #538AB9;
+        transform: scale(1.02);
     }
 `;
 
 const Findbankp = styled.p`
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     color: white;
-    padding: 25px 15px 0;
+    padding: 8vh 2.25vh 0;
 `;
 
+const Findbankwrap = styled.div`
+    margin-top: 5vh;
+`
+
 const Findbanksub = styled.p`
-    font-size: 15px;
+    font-size: 20px;
     color: white;
     font-weight: bold;
-    padding-top: 7px;
-    margin-left: 15px;
+    margin-left: 2.25vh;
 `;
 
 const Parkingfind = () => {
@@ -33,7 +37,10 @@ const Parkingfind = () => {
     return(
         <Wrapdiv>
             <Findbankp>주차장 찾기</Findbankp>
-            <Findbanksub>근처 주차장 및 혼잡도를 알려드려요.</Findbanksub>
+            <Findbankwrap>
+                <Findbanksub>근처 주차장 및 혼잡도를</Findbanksub>
+                <Findbanksub>알려드려요.</Findbanksub>
+            </Findbankwrap>
         </Wrapdiv>
     )
 }
