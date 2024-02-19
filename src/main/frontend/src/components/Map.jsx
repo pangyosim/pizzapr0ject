@@ -29,7 +29,7 @@ const Mylocbutton = styled.button`
     background-color: white;
     position:absolute;
     top: 90vh;
-    left: 43vh;
+    left: 49vh;
     border-radius: 5px;
     z-index: 999;
     width: 4vh;
@@ -119,6 +119,7 @@ const Map = () => {
                                     border: 1.5px solid #0675f4; 
                                     display: flex; 
                                     align-items: center;
+                                    transition: 0.1s linear;
                                 } 
                                 .arr:after{ 
                                     border-top: 5px solid #0675f4;
@@ -126,9 +127,13 @@ const Map = () => {
                                     border-right: 4px solid transparent;
                                     content: "";
                                     position: absolute;
-                                    top: 40.5px;
+                                    top: 44px;
                                     left: 30px;
-                                }</style>`,
+                                }
+                                .arr:hover{
+                                    transform: scale(1.02);
+                                }
+                                </style>`,
                                 `<div class="arr">`,
                                     ` <img src=${ibk} style="margin-left: 0.75vh; width: 2.5vh; height: 2.5vh;"/><p style="margin-left: 1vh; font-size: 12px; font-weight: bold;"> IBK기업은행 <br>${e.krnbrm}</p>`,
                                 `</div>`
@@ -142,9 +147,11 @@ const Map = () => {
                     setnearlist(near_list.sort((a,b) => a.distance - b.distance).slice(0,6));
                 }
                 naver.maps.Event.addListener(marker, 'click', () => {
+                        map.setZoom(16)
                         const data_arr = [e.krnbrm,e.brncnwbscadr,e.trwntgn1,e.waitcuscnt1,e.trwntgn2,e.waitcuscnt2,e.trwntgn3,e.waitcuscnt3,e.trwntgn4,e.waitcuscnt4,e.waitcuscnt5,e.waitcuscnt5]
                         const new_arr = data_arr.filter((element) => element != null)
-                        let content = `<div style="padding: 20px;"><div style="color: darkblue; font-weight: bold; border-bottom: 1.5px solid black; font-size: 18px; padding-bottom: 5px;">IBK기업은행</div>`
+                        console.log(new_arr)
+                        let content = `<div class="wrapdata" style="padding: 20px;"><div style="color: darkblue; font-weight: bold; border-bottom: 1.5px solid black; font-size: 18px; padding-bottom: 5px;">IBK기업은행</div>`
                         if( new_arr.length > 2){
                             new_arr.map((data,idx) => {
                                 if(idx === 0){

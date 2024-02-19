@@ -13,4 +13,4 @@ const MapPage = () => {
         </>
     )
 }
-export default MapPage;
+export default React.memo(MapPage);

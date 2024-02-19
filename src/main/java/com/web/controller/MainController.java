@@ -39,9 +39,6 @@ public class MainController {
     private String servicekey;
 
     @Autowired
-    private WaitrepoService was;
-
-    @Autowired
     private RefineWaitrepoService rws;
 
     @GetMapping("/map")
@@ -98,23 +95,22 @@ public class MainController {
             }
             wait_list.add(tmp_map);
         }
+        System.out.println(wait_list);
         List<Object> result = new ArrayList<>();
         System.out.println(res.size());
         System.out.println(wait_arr.size());
-        System.out.println(wait_arr);
         if (wait_arr.size() > 2) {
             for (int k = 0; k < res.size(); k++) {
-                for( int j=0; j< wait_arr.size(); j++) {
-                    ObjectMapper obm = new ObjectMapper();
-                    Object objz = wait_arr.get(k);
-                    Map<String, Object> map = obm.convertValue(objz, Map.class);
-                    Bankaddr baw = res.get(k);
                     Map<String, Object> detail_wait = new HashMap<>();
+                    Bankaddr baw = res.get(k);
+                    System.out.println("baw : " + baw);
                     detail_wait.put("seq", baw.getSeq());
                     detail_wait.put("krnbrm", baw.getKrnbrm());
                     detail_wait.put("brncnwbscadr", baw.getBrncnwbscadr());
                     detail_wait.put("geox", baw.getGeox());
                     detail_wait.put("geoy", baw.getGeoy());
+                    ObjectMapper obm = new ObjectMapper();
+                    Map<String, Object> map = obm.convertValue(wait_list.get(k), Map.class);
                     detail_wait.put("trwntgn1", map.get("trwntgn1"));
                     detail_wait.put("waitcuscnt1", map.get("waitcuscnt1"));
                     detail_wait.put("trwntgn2", map.get("trwntgn2"));
@@ -126,8 +122,8 @@ public class MainController {
                     detail_wait.put("trwntgn5", map.get("trwntgn5"));
                     detail_wait.put("waitcuscnt5", map.get("waitcuscnt5"));
                     result.add(detail_wait);
-                }
             }
+            System.out.println("result : " + result);
         } else {
             for (Bankaddr ba : res) {
                 Map<String, Object> detail = new HashMap<>();
@@ -148,6 +144,7 @@ public class MainController {
     @GetMapping("/minwait")
     public List<RefineWaitrepo> minwait(){
         List<RefineWaitrepo> rewait = rws.getWaitrepoList(new RefineWaitrepo());
+        System.out.println(rewait);
 //        List<Waitrepo> tmp_list = new ArrayList<>();
 //        for(RefineWaitrepo rw : rewait){
 //            if ()

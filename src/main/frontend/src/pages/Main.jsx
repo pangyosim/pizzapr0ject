@@ -39,6 +39,7 @@ const LastBox = styled.div`
     height: 700px;
     boxSizing: border-box;
     margin-right: 6vh;
+    margin-top: 2vh;
 `;
 //------------------------------------------------------------------------------------------
 // wrap
@@ -48,8 +49,10 @@ const Wrapdiv = styled.div`
 `;
 
 const Navstyle = styled(NavLink)`
-    text-decoration: none;
     margin-left: 1vh;
+    &:hover{
+        text-decoration: none;
+    }
 `;
 
 
@@ -74,7 +77,9 @@ const Main = () => {
                         </Navstyle>
                     </Wrapdiv>
                     <Wrapdiv>
-                        <QA/>
+                        <Navstyle to="/qna">
+                            <QA/>
+                        </Navstyle>
                         <CustomerService/>
                         <Sitemap/>
                     </Wrapdiv>
