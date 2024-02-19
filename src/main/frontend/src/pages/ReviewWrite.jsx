@@ -1,47 +1,36 @@
 // ReviewWrite.jsx
 
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { Button } from 'react-bootstrap'; 
 import { useNavigate } from 'react-router-dom';
 import styled from "@emotion/styled";
 import StarInput from '../components/StarInput';
 
-const Base = styled.section`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
 
-const RatingValue = styled.span`
-  font-size: 1.2rem;
-  line-height: 100%;
-`;
-
-const RatingField = styled.fieldset`
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-  border: none;
-  transform: translateY(2px);
-
-  input:checked ~ label,
-  labeL:hover,
-  labeL:hover ~ label {
-    transition: 0.2s;
-    color: orange;
-  }
-`;
- 
 const ReviewWrite = (props) => { 
 
   const navigate = useNavigate();
+  const [rating, setRating] = useState(0);
+  const [userData, setUserData] = useState(null); // 사용자 정보 상태 추가
   const [review, setReview] = useState({
     reviewUserId:'',
     reviewContents:'',
     krnbrm:'',
   }); 
-  const [rating, setRating] = useState(0);
+  
+  useEffect(() => {
+    // 로그인 후 localStorage에 저장된 사용자 데이터 가져오기
+    const user = JSON.parse(localStorage.getItem('userData'));
+    if (user) {
+        setUserData(user);
+        // 사용자 정보를 가져와서 상태에 설정
+        setReview({
+            ...review,
+            reviewUserId: user.id, // 사용자 아이디를 작성자 필드에 설정
+            
+        });
+    }
+}, []);
   
   const handleClickRating = (value) => {
     setRating(value);
@@ -92,7 +81,7 @@ const ReviewWrite = (props) => {
         <form onSubmit={submitReview}> 
             <div> 
                 <label>아이디</label> 
-                <input type='text' name="reviewUserId" onChange={changeValue} /> 
+                <input type="text" name="reviewUserId" value={userData ? userData.id : ''} readOnly /> 
             </div>            
             <div> 
                 <label>지점</label> 
@@ -130,5 +119,31 @@ const ReviewWrite = (props) => {
     </div>
   ); 
 }; 
- 
+const Base = styled.section`
+display: flex;
+align-items: center;
+gap: 8px;
+`;
+
+const RatingValue = styled.span`
+font-size: 1.2rem;
+line-height: 100%;
+`;
+
+const RatingField = styled.fieldset`
+position: relative;
+display: flex;
+align-items: center;
+flex-direction: row-reverse;
+border: none;
+transform: translateY(2px);
+
+input:checked ~ label,
+labeL:hover,
+labeL:hover ~ label {
+  transition: 0.2s;
+  color: orange;
+}
+`;
+
 export default ReviewWrite;

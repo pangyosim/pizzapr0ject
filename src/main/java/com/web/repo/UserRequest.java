@@ -15,7 +15,6 @@ public class UserRequest {
     private String phoneNumber1;	//폰넘버
     private String phoneNumber2;	//폰넘버
     private String email;		//이메일
-    private String homepage;	//도메인
     private String addr1;		//주소
     private String addr2;		//주소
     private String addr3;		//주소
@@ -25,7 +24,7 @@ public class UserRequest {
     public UserRequest() {}
 
 	public UserRequest(String id, String name, String password, String socialnum1, String socialnum2,
-			String phoneNumber1, String phoneNumber2,  String email, String homepage, String addr1,
+			String phoneNumber1, String phoneNumber2,  String email, String addr1,
 			String addr2, String addr3, String addr4, String provider) {
 		super();
 		this.id = id;
@@ -36,7 +35,6 @@ public class UserRequest {
 		this.phoneNumber1 = phoneNumber1;
 		this.phoneNumber2 = phoneNumber2;
 		this.email = email;
-		this.homepage = homepage;
 		this.addr1 = addr1;
 		this.addr2 = addr2;
 		this.addr3 = addr3;

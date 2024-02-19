@@ -12,6 +12,8 @@ const SignupForm = () => {
 
   // 회원 정보 상태 변수
   const [userData, setUserData] = useState(null);
+   // 중복 확인 상태 변수
+   const [isCheckId, setIsCheckId] = useState(true);
 
   const [addre, setAddre] = useState('');
   const [addre1, setAddre1] = useState('');
@@ -36,37 +38,48 @@ const SignupForm = () => {
     };
   }, []);
 
+  const checkUsernameAvailability = async (id) => {
+    const response = await fetch(`/api/register/checkId?id=${id}`);
+    const data = await response.text();
+    console.log(data); 
+    setIsCheckId(response.ok);
+  };
 
   const onSubmit = async (data) => {
-    try {
-      data.addr1 = addre1
-      data.addr2 = addre2
-      data.addr3 = addre3
-      //data.addr4 = progressFrame.document.getElementById("add4").value
+     // 중복 확인 후 회원가입 처리
+     if (isCheckId) {
+      try {
+        data.addr1 = addre1
+        data.addr2 = addre2
+        data.addr3 = addre3
+        //data.addr4 = progressFrame.document.getElementById("add4").value
 
-      console.log(data)
-      // 회원 정보 저장
-      setUserData(data);
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+        console.log(data)
+        // 회원 정보 저장
+        setUserData(data);
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
 
-      const responseData = await response.json();
+        const responseData = await response.json();
 
-      if (response.ok) {
-        console.log('회원가입이 완료되었습니다.');
-        alert('환영합니다.');
-        navigate('/login');
-      } else {
-        console.error('회원가입 실패:', responseData.message);
+        if (response.ok) {
+          console.log('회원가입이 완료되었습니다.');
+          alert('환영합니다.');
+          navigate('/login');
+        } else {
+          console.error('회원가입 실패:', responseData.message);
+        }
+      } catch (error) {
+        console.error('API 호출 중 오류:', error);
+      } 
+     } else {
+        alert('아이디가 이미 사용 중입니다.');
       }
-    } catch (error) {
-      console.error('API 호출 중 오류:', error);
-    } 
 
   };
 
@@ -112,29 +125,58 @@ const SignupForm = () => {
         <div className="input-group">
       <form onSubmit={handleSubmit(onSubmit)}>
         
-        <input type="text" id="userid" placeholder='아이디'{...register('id', { required: '아이디를 입력해주세요.' })} />
+        <span style={{ fontSize: 'small', color: 'gray' }}>필수 *</span> &nbsp;
+        {/* <input type="text" id="userid" style={{marginBottom:"10px"}}  placeholder='아이디'{...register('id', { required: '아이디를 입력해주세요.' })} />
         {errors.id && <span style={{ fontSize: 'small', color: 'red' }}>{errors.id.message}</span>}
-        <br/>
+        <br/> */}
+        <input
+              type="text"
+              id="userid"
+              placeholder='아이디'
+              {...register('id', { 
+                required: '아이디를 입력해주세요.',
+                validate: value => checkUsernameAvailability(value)
+              })}
+            />
+            {errors.id && <span style={{ fontSize: 'small', color: 'red' }}>{errors.id.message}</span>}
 
-        <input type="text" id="username" placeholder='이름'{...register('name', { required: '이름을 입력해주세요.' })} />
+            <br/>
+
+        <span  style={{ fontSize: 'small', color: 'gray' }}>필수 *</span> &nbsp;
+        <input type="text" id="username" style={{marginBottom:"10px"}} placeholder='이름'{...register('name', { required: '이름을 입력해주세요.' })} />
         {errors.name && <span style={{ fontSize: 'small', color: 'red' }}>{errors.name.message}</span>}
         <br/>
 
-        <input type="password" id="password1"placeholder="비밀번호"{...register('password', { required: '비밀번호를 입력해주세요.', minLength: { value: 6, message: '비밀번호는 최소 6자 이상이어야 합니다.' } })}/>
+        <span  style={{ fontSize: 'small', color: 'gray' }}>필수 *</span> &nbsp;
+        <input type="password" id="password1" placeholder="비밀번호"{...register('password', { required: '비밀번호를 입력해주세요.', minLength: { value: 6, message: '비밀번호는 최소 6자 이상이어야 합니다.' } })}/>
         {errors.password && <span style={{ fontSize: 'small', color: 'red' }}>{errors.password.message}</span>}
         <br/>
 
-        <input type="password" id="password2"placeholder="비밀번호확인"{...register('passwordConfirmation', { validate: value => value === watch('password') || '비밀번호가 일치하지 않습니다.' })}/>
+        <input type="password" id="password2" style={{marginLeft:"40px",marginBottom:"10px"}} placeholder="비밀번호확인"{...register('passwordConfirmation', { validate: value => value === watch('password') || '비밀번호가 일치하지 않습니다.' })}/>
         {errors.passwordConfirmation && <span style={{ fontSize: 'small', color: 'red' }}>{errors.passwordConfirmation.message}</span>}
         <br/>
 
-        <input type="text" id="year1" name="year1"placeholder="생년(YYMMDD)"{...register('socialnum1', { required: '생년월일을 입력하세요.' })} />
-        
-
-        <input type="text" id="year2" name="year2"placeholder="-1" {...register('socialnum2')}/>******
-        {errors.year && <span style={{ fontSize: 'small', color: 'red' }}>{errors.year.message}</span>}
+        <span  style={{ fontSize: 'small', color: 'gray' }}>필수 *</span> &nbsp;
+        <input type="text" id="year1" name="year1"  style={{marginBottom:"10px"}} placeholder="생년(YYMMDD)" {...register('socialnum1', { 
+          required: '생년월일을 입력하세요.', 
+          pattern: { value: /^\d{6}$/, 
+          message: '유효한 생년월일을 입력해주세요.' } })} 
+          maxLength="6"/>
+        &nbsp;
+        <strong>-</strong>
+        &nbsp;
+        <input type="text" id="year2" name="year2" placeholder="1234567" {...register('socialnum2', { 
+            required: '뒷자리 7자리를 입력해주세요.', 
+            pattern: { 
+              value: /^\d{7}$/, 
+              message: '유효한 주민등록번호 뒷자리를 입력해주세요.' 
+            } 
+          })} style={{width:"100px"}} maxLength="7"/>
+          {errors.socialnum1 && <span style={{ fontSize: 'small', color: 'red' }}>{errors.socialnum1.message}</span>}
+        {errors.socialnum2 && <span style={{ fontSize: 'small', color: 'red' }}>{errors.socialnum2.message}</span>}
         <br/>
-
+        
+        <span  style={{ fontSize: 'small', color: 'gray' }}>필수 *</span> &nbsp;
         <select id="phon1"{...register('phoneNumber1')}>
               <option value="000">------</option>
               <option value="010">010</option>
@@ -142,16 +184,29 @@ const SignupForm = () => {
               <option value="012">012</option>
               <option value="016">016</option>
           </select> 
-        <input type="text" id="phon2" placeholder="휴대폰번호"{...register('phoneNumber2')}/>
-
+          &nbsp;
+          <strong>-</strong>
+          &nbsp;
+          <input
+            type="text"
+            id="phon2"
+            placeholder="휴대폰번호를 입력해주세요."
+            {...register('phoneNumber2', { required: '휴대폰번호를 입력해주세요.' ,
+              pattern: { 
+                value: /^\d{7,8}$/, 
+                message:'유효한 휴대폰번호를 입력하세요'}})}
+              maxLength="8"
+            />
+          {errors.phoneNumber2 && <span style={{ fontSize: 'small', color: 'red' }}>{errors.phoneNumber2.message}</span>}
         <br/><br/>
-
-        <input type="email" id="emailInput"placeholder="이메일"{...register('email', { required: '이메일을 입력해주세요.', pattern: { value: /^\S+@\S+$/i, message: '올바른 이메일 형식이 아닙니다.' } })} />
+        
+        <span  style={{ fontSize: 'small', color: 'gray' }}>필수 *</span> &nbsp;
+        <input type="email" id="emailInput"placeholder="이메일(@포함)"{...register('email', { required: '이메일을 입력해주세요.', pattern: { value: /^\S+@\S+$/i, message: '올바른 이메일 형식이 아닙니다.' } })} />
         {errors.email && <span style={{ fontSize: 'small', color: 'red' }}>{errors.email.message}</span>}
         <br/>
         <br/>
 
-        <div className="textForm">
+        <div className="textForm"style={{marginLeft:"40px"}}  > 
           <input type="text" id="add1" placeholder="주소1" onChange={handleChange} {...register('addr1')} value={addre1} />
           <input type="button" value="우편번호찾기" onClick={checkAddress}/><br/>
 

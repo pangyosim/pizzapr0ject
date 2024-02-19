@@ -2,11 +2,7 @@
 
 package com.web.service;
 
-
-import java.util.List;
-
 import com.web.repo.UserMember;
-
 
 
 public interface UserService {
@@ -16,5 +12,5 @@ public interface UserService {
 			String phoneNumber1, String phoneNumber2, String email, String addr1,
 			String addr2, String addr3, String addr4, String provider);
 	
-	public List<UserMember> findAll();
+
 }

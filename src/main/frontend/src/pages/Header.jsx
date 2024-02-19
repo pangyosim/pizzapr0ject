@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import categoryimg from '../img/category.png';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     padding: 30px;
@@ -28,11 +29,12 @@ const Atag = styled.a`
 
 const Header = () => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     const handleLogout = () => {
-     // 모든 localStorage 데이터 제거
-     localStorage.clear();
-     window.location.reload();
+        // 모든 localStorage 데이터 제거
+        localStorage.clear();
+        navigate('/');
     };
     return(
         <Wrapper>
