@@ -16,11 +16,16 @@ import BankfindForm from './pages/BankfindForm';
 import Login from './components/user/banglogin';
 import SignupForm from './components/user/singupform';
 import ParkingInfo from './components/user/bangparking';
+import ParkPage from './pages/ParkPage';
+import AboutPage from './pages/AboutPage';
+
 const App = () => {
   return(
     <Routes>
       <Route path="/" element={<Main/>}/>
       <Route path='/map' element={<MapPage/>}></Route>
+      <Route path='/park' element={<ParkPage/>}/>
+      <Route path='/about' element={<AboutPage/>}/>
       {/* <Route path='/:category' element={<NewsPage/>}/> */}
         {/* 경호올림 */}
         <Route path='/qna' element={<QnA/>}/>

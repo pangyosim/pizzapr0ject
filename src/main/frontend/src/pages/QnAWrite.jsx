@@ -1,11 +1,10 @@
 // QnAWrite.jsx
 
 import React, { useState,useEffect } from 'react';
-import { Button } from 'react-bootstrap'; 
 import Header from '../pages/Header';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 const QnAWrite = () => { 
     const navigate = useNavigate();
     const [userData, setUserData] = useState(null); // 사용자 정보 상태 추가
@@ -74,7 +73,7 @@ const QnAWrite = () => {
     return ( 
         <>
         <Header/>
-            <Form onSubmit={submitQnA}> 
+            <Form onSubmit={submitQnA} style={{marginTop:"10vh"}}> 
                 <br/>
                 <h2>QnA 글쓰기</h2>
                 <br/>
@@ -90,7 +89,8 @@ const QnAWrite = () => {
                     <label htmlFor="exampleFormControlTextarea1" className="form-label">내용</label>
                     <textarea  name="qaContents" onChange={changeValue} className="form-control" style={{width:"900px"}} rows="3"></textarea>
                 </div>
-                <Button  variant="primary" type="submit">글쓰기</Button> 
+                <Link to="/qna"><Buttonstyle>&lsaquo; 뒤로가기</Buttonstyle></Link>
+                <ButtonStyle type="submit">글쓰기</ButtonStyle>
             </Form> 
         </>
     ); 
@@ -101,4 +101,42 @@ const Form = styled.form`
     padding-left: 100px;
 `;
 
+
+const ButtonStyle = styled.button`
+    margin-left: 83vh;
+    width: 11vh;
+    height: 4.5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: darkblue;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #0002ab;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
+const Buttonstyle = styled.button`
+    border: none;
+    background: none;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+    cursor: pointer;
+    transition: 0.1s linear;
+    &:hover {
+        text-decoration: underline;
+        color: #bdbebd;
+        transform: scale(1.05);
+    }
+`;
 export default QnAWrite;

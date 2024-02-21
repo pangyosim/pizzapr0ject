@@ -1,7 +1,6 @@
 // BoardWrite.jsx
 
 import React, { useState,useEffect } from 'react';
-import { Button } from 'react-bootstrap'; 
 import Header from '../pages/Header';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
@@ -75,9 +74,9 @@ const BoardWrite = () => {
     return ( 
         <>
         <Header/>
-            <Form onSubmit={submitBoard}> 
+            <Form onSubmit={submitBoard} style={{margin:"10vh 50vh"}}> 
                 <Div>
-                    <h2>공지사항 수정</h2>
+                    <h2>공지사항 작성</h2>
                 </Div>
                 <div className="mb-3">
                     <label htmlFor="exampleFormControlInput1" className="form-label">제목</label>
@@ -92,7 +91,7 @@ const BoardWrite = () => {
                     <textarea  name="boardContents" onChange={changeValue} className="form-control" style={{width:"900px"}} rows="3"></textarea>
                 </div>
                 <Div>
-                    <Button  variant="primary" type="submit">글쓰기</Button> 
+                    <ButtonStyle type="submit">글쓰기</ButtonStyle> 
                 </Div>
             </Form> 
         </>
@@ -107,4 +106,25 @@ const Div = styled.div`
     text-align: center;
     padding-right: 200px;
 `;
+const ButtonStyle = styled.button`
+    width: 11vh;
+    height: 4.5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: darkblue;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #0002ab;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
+
 export default BoardWrite;

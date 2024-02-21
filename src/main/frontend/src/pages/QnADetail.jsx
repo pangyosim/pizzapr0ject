@@ -2,7 +2,6 @@
 // QnADetail.jsx
 
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import ReplyItem from '../components/ReplyItem';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -220,7 +219,7 @@ const QnADetail = () => {
     <div>
     <Header/>
         <form>
-        <div style={{textAlign:"center", paddingBottom:"50px"}}>
+        <div style={{margin:"7vh auto"}}>
         <h2>QnA 상세보기</h2>
         </div>
         <Table>
@@ -246,21 +245,21 @@ const QnADetail = () => {
               <>
               {(userData.role === 'ROLE_ADMIN' || userData.id === QnA.qaUserId) && ( // ROLE_ADMIN이거나 본인이 작성한 경우에만 버튼 표시
                   <>
-                  <Button variant="warning" onClick={QnAUpdate}>
+                  <Buttonupdate variant="warning" onClick={QnAUpdate}>
                       수정
-                  </Button>
+                  </Buttonupdate>
                   &nbsp;
-                  <Button variant="danger" onClick={QnADelete}>
+                  <Buttondelete variant="danger" onClick={QnADelete}>
                       삭제
-                  </Button>
+                  </Buttondelete>
                   </>
               )}
               </>
           )}
             &nbsp;
-            <Button variant="primary" onClick={QnAList}>
+            <Buttonlist variant="primary" onClick={QnAList}>
                 목록
-            </Button>
+            </Buttonlist>
         </Div>
         </form>
         {/* 댓글 작성 */}
@@ -275,7 +274,7 @@ const QnADetail = () => {
                       onChange={changeValue}
                       value={reply.replyContents}
                   />
-                  <Button type="submit">글쓰기</Button>
+                  <Buttonlist type="submit">댓글쓰기</Buttonlist>
               </Li>
           </ul>
         ) : (
@@ -305,6 +304,7 @@ const QnADetail = () => {
                 ) : (
                     // 댓글이 있는 경우
                     replys.map((reply) => (
+                      <div style={{borderTop:"1px solid black", paddingTop: "2vh",paddingBottom:"2vh"}}>
                     <ul key={reply.replySeq}>
                         <ReplyItem reply={reply}/>
                         {/* 수정, 삭제 기능 */}
@@ -317,8 +317,8 @@ const QnADetail = () => {
                             onChange={handleContentChange}
                             value={editedContent}
                             />
-                            <Button onClick={() => handleReplyUpdate(reply)}>완료</Button>
-                            <Button onClick={cancelEditing}>취소</Button>
+                            <Buttonupdate onClick={() => handleReplyUpdate(reply)}>완료</Buttonupdate>
+                            <Buttondelete style={{marginLeft:"1vh"}} onClick={cancelEditing}>취소</Buttondelete>
                         </div>
                         ) : (
                         // 수정 중이 아닌 경우
@@ -327,8 +327,8 @@ const QnADetail = () => {
                               <>
                               {(userData.role === 'ROLE_ADMIN' ||  userData.id === reply.replyUserId) && ( // ROLE_ADMIN이거나 본인이 작성한 경우에만 버튼 표시
                                 <>
-                                    <button onClick={() => startEditing(reply)}>수정</button>
-                                    <button onClick={() => replyDelete(reply)}>삭제</button>
+                                    <Buttonupdate style={{marginLeft:"4vh"}} onClick={() => startEditing(reply)}>수정</Buttonupdate>
+                                    <Buttondelete style={{marginLeft:"1vh"}}onClick={() => replyDelete(reply)}>삭제</Buttondelete>
                                 </>
                             )}
                             </>
@@ -336,6 +336,7 @@ const QnADetail = () => {
                         </div>
                         )}
                     </ul>
+                    </div>
                     ))
                 )}
             </div>
@@ -390,5 +391,66 @@ const Li = styled.li`
 const Textarea = styled.textarea`
     width: 1150px;
 `;
+
+const Buttonupdate = styled.button`
+    width: 10vh;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: #219e4a;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #23aa4f;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
+const Buttondelete = styled.button`
+    width: 10vh;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: #a74a45;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #cb5a53;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
+const Buttonlist = styled.button`
+    width: 10vh;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: darkblue;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #0002ab;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
 export default QnADetail;
 

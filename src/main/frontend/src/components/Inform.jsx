@@ -30,6 +30,7 @@ const Headerinfomore = styled.span`
 `;
 const BoardList = styled.div`
     color: white;
+    margin-left: 2vh;
 `;
 const Li = styled.li`
     height: 12px;
@@ -57,10 +58,10 @@ const Inform = () => {
                 <Link to="/board"><Headerinfomore>더보기</Headerinfomore></Link>
             </Headerinfo>
             <BoardList>
-                {boards.slice(0, 6).map(board => (
+                {boards.map(board => (
                     <ul key={board.boardSeq}>
-                        <Li><Link to={`/board/${board.boardSeq}`}style={{ color:"white", textDecoration: "none",fontSize:"15px"}}><span style={{color:"red"}}>[공지]</span> {board.boardTitle}</Link>
-                        <span style={{ float: "right", color: "white", paddingRight: "5vh"}}>
+                        <Li><Link to={`/board/${board.boardSeq}`}style={{ color:"white", textDecoration: "none",fontSize:"14px"}}><span style={{color:"red"}}>[공지]</span> {board.boardTitle}</Link>
+                        <span style={{ float: "right", color: "white", paddingRight: "4vh",fontSize:"14px"}}>
                             {board.boardDate} {/* 예시: 공지사항의 생성일자 */}
                         </span>
                         </Li>

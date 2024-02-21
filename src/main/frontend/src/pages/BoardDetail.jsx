@@ -3,10 +3,26 @@
 
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../pages/Header';
+
+const Buttonstyle = styled.button`
+    border: none;
+    background: none;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+    cursor: pointer;
+    transition: 0.1s linear;
+    &:hover {
+        text-decoration: underline;
+        color: #bdbebd;
+        transform: scale(1.05);
+    }
+`;
 
 const BoardDetail = () => {
     const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
@@ -84,7 +100,7 @@ const BoardDetail = () => {
     <div>
     <Header/>
         <form>
-        <div style={{textAlign:"center", paddingBottom:"50px"}}>
+        <div style={{textAlign:"center", paddingBottom:"50px",margin:"8vh auto"}}>
             <h2>공지사항 상세보기</h2>
         </div>
         <Table>
@@ -107,20 +123,20 @@ const BoardDetail = () => {
         </Table>
         <Div>
         {userData && userData.role === 'ROLE_ADMIN' && ( // ROLE_ADMIN일 때만 버튼 표시
-            <Button variant="warning" onClick={BoardUpdate}>
+            <Buttonstyle onClick={BoardUpdate}>
                 수정
-            </Button>
+            </Buttonstyle>
         )}
             &nbsp;
         {userData && userData.role === 'ROLE_ADMIN' && ( // ROLE_ADMIN일 때만 버튼 표시
-            <Button variant="danger" onClick={BoardDelete}>
+            <Buttonstyle onClick={BoardDelete}>
                 삭제
-            </Button>
+            </Buttonstyle>
         )}
             &nbsp;
-            <Button variant="primary" onClick={BoardList}>
+            <Buttonstyle onClick={BoardList}>
                 목록
-            </Button>
+            </Buttonstyle>
         </Div>
         </form>
     </div>

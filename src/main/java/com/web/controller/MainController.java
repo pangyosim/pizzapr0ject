@@ -95,15 +95,15 @@ public class MainController {
             }
             wait_list.add(tmp_map);
         }
-        System.out.println(wait_list);
+        // System.out.println(wait_list);
         List<Object> result = new ArrayList<>();
-        System.out.println(res.size());
-        System.out.println(wait_arr.size());
+        // System.out.println(res.size());
+        // System.out.println(wait_arr.size());
         if (wait_arr.size() > 2) {
             for (int k = 0; k < res.size(); k++) {
                     Map<String, Object> detail_wait = new HashMap<>();
                     Bankaddr baw = res.get(k);
-                    System.out.println("baw : " + baw);
+                    // System.out.println("baw : " + baw);
                     detail_wait.put("seq", baw.getSeq());
                     detail_wait.put("krnbrm", baw.getKrnbrm());
                     detail_wait.put("brncnwbscadr", baw.getBrncnwbscadr());
@@ -123,7 +123,7 @@ public class MainController {
                     detail_wait.put("waitcuscnt5", map.get("waitcuscnt5"));
                     result.add(detail_wait);
             }
-            System.out.println("result : " + result);
+            // System.out.println("result : " + result);
         } else {
             for (Bankaddr ba : res) {
                 Map<String, Object> detail = new HashMap<>();

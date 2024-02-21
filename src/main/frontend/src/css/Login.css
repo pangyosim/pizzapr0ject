@@ -1,12 +1,13 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500&display=swap');
 /* src/Login.css */
+
 .login-box{
-	width: 300px;
-	height: 300px;
+	width: 40vh;
+	height: 50vh;
 	margin: 0 auto;
-	margin-top: 13%;
+	margin-top: 20vh;
 	border: none;
-    border-radius: 10px; 
+    border-radius: 20px; 
 }
 .kakaologin button{
     width: 300px;
@@ -16,14 +17,17 @@
     cursor: pointer;
     border: none;
     border-radius: 10px; 
+    transition: 0.1s linear;
 }
 .kakaologin button:hover {
     background-color: rgb(179, 145, 8);
+    transform: scale(1.02);
 }
 
 
-h2 {
-    color: #333;
+.login-box h2 {
+    color: #00008b;
+    font-family: "Ubuntu", sans-serif;
 }
 
 p {
@@ -31,34 +35,56 @@ p {
 }
 
 .login-box input {
-    width: 300px;
+    width: 40vh;
+    height: 6vh;
     padding: 8px;
     margin-bottom: 16px;
     box-sizing: border-box;
     border-radius: 10px; 
+    border: 1px solid black;
+    transition: 0.1s linear;
+}
+
+.login-box input:hover{
+    transform: scale(1.02);
+    border: 1px solid blue;
+}
+
+.login-box input::placeholder{
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .login {
-    width: 300px;
-    background-color: #148ade;
+    width: 40vh;
+    height: 6vh;
+    background-color: darkblue;
     color: #fff;
+    font-weight: bold;
+    font-size: 20px;
     padding: 10px;
     cursor: pointer;
     border: none;
     border-radius: 10px; 
+    margin-bottom: 1vh;
+    transition: 0.1s linear;
 }
 
 .login:hover {
-    background-color: #0056b3;
+    background-color: #0004b6;
+    transform: scale(1.02);
 }
 
 .loginLink{
+    cursor: pointer;
     color: gray;
+}
+.loginLink:hover{
+    color: #9b9b9b;
 }
 
 a {
     text-decoration: none;
-    
 }
 
 a:hover {

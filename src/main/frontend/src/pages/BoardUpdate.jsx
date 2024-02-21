@@ -3,7 +3,6 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
 import styled from "styled-components";
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../pages/Header';
@@ -69,7 +68,7 @@ const BoardUpdate = () => {
   return (
     <>
     <Header/>
-    <Form onSubmit={submitUpdate}>
+    <Form onSubmit={submitUpdate} style={{margin:"10vh auto"}}>
     <Div>
         <h2>공지사항 수정</h2>
     </Div>
@@ -87,13 +86,13 @@ const BoardUpdate = () => {
             <textarea  name="boardContents" value={board.boardContents} onChange={changeValue} className="form-control" style={{width:"900px"}} rows="3"></textarea>
         </div>
         <Div>
-            <Button variant="primary" type="botton" onChange={changeValue}>
+            <ButtonStyle  type="botton" onChange={changeValue}>
                 수정
-            </Button>
+            </ButtonStyle>
             &nbsp;
-            <Button variant="warning" type="botton" onChange={boardDetail}>
+            <Buttonback type="botton" onChange={boardDetail}>
                 뒤로
-            </Button>
+            </Buttonback>
         </Div>
     </Form>
     </>
@@ -109,5 +108,44 @@ const Div = styled.div`
     text-align: center;
     padding-right: 200px;
 `;
-
+const ButtonStyle = styled.button`
+    width: 11vh;
+    height: 4.5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: darkblue;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #0002ab;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
+const Buttonback = styled.button`
+    width: 11vh;
+    height: 4.5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: #728cd8;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #7f9cef;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
 export default BoardUpdate;

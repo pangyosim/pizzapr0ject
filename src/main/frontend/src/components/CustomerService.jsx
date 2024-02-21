@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Wrapdiv = styled.div`
-    width: 15vh;
+    width: 20vh;
     height: 9.5vh;
     margin-top: 7vh;
     margin-left: 3vh;
@@ -26,7 +26,7 @@ const CustomerService = () => {
 
     return(
         <Wrapdiv>
-            <CustomerServicep>고객센터</CustomerServicep>
+            <CustomerServicep>About</CustomerServicep>
         </Wrapdiv>
     )
 }

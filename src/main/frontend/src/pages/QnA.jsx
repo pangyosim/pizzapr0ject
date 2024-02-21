@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QnAItem from '../components/QnAItem';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import Header from '../pages/Header';
 import styled from "styled-components";
 
@@ -40,7 +39,8 @@ const QnA = () => {
         fetch('http://localhost:8080/qna')
             .then((res) => res.json())
             .then((res) => {
-                const sortedQnAs = res.sort((a, b) => b.qaSeq - a.qaSeq);
+                const sortedQnAs = res.sort(function(a, b) {
+                    return new Date(a.qaDate).getTime() - new Date(b.qaDate).getTime()}).reverse();
                 setQnAs(sortedQnAs);
             });
     }
@@ -49,7 +49,8 @@ const QnA = () => {
         fetch('http://localhost:8080/board')
             .then((res) => res.json())
             .then((res) => {
-                const sortedBoards = res.sort((a, b) => b.boardSeq - a.boardSeq);
+                const sortedBoards = res.sort(function(a, b) {
+                    return new Date(a.boardDate).getTime() - new Date(b.boardDate).getTime()}).reverse();
                 setBoards(sortedBoards);
             });
     }
@@ -108,16 +109,14 @@ const QnA = () => {
         <div>
             <Header />
             <Form onSubmit={handleFormSubmit}>
-                <Div>
-                    <h2>QnA 게시판</h2>
-                </Div>
+                <h2>QnA 게시판</h2>
                 <div style={{ float: "right", paddingBottom: "30px" }}>
-                    <select value={searchType} onChange={handleSearchTypeChange}>
+                    <select value={searchType} onChange={handleSearchTypeChange}  style={{width:"10vh", borderRadius:"0.5vh",height:"3.5vh"}}>
                         <option value="qaTitle">제목</option>
                         <option value="qaUserId">작성자</option>
                         <option value="qaContents">내용</option>
                     </select>
-                    <input type='text' name='search' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                    <input type='text' name='search' style={{border:"0.5px solid black",width:"22vh", borderRadius:"0.5vh",height:"3.5vh"}} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                 </div>
                 <table className="table">
                     <thead>
@@ -144,11 +143,16 @@ const QnA = () => {
                         ))}
                     </tbody>
                 </table>
-                <Div>
-                    <Button variant="warning" style={{ float: "right" }}>
-                        <Link to="/qnaWrite" className="nav-link">글쓰기</Link>
-                    </Button>
-                </Div>
+                {userData && (<>
+                        {(
+                            <Div>
+                                <ButtonStyle variant="warning">
+                                    <Link to="/qnaWrite" className="nav-link">글쓰기</Link>
+                                </ButtonStyle>
+                            </Div>
+                        )}
+                    </>
+                )}
                 <div style={{ paddingBottom: "70px" }}>
                 {pageNumbers.length > 0 && (
                     <nav aria-label="Page navigation example">
@@ -183,6 +187,7 @@ const Form = styled.form`
     width: 1100px;
     margin-left:auto;
     margin-right:auto;
+    margin-top: 6.5vh;
 `;
 const Div = styled.div`
     padding-bottom: 50px;
@@ -193,5 +198,27 @@ const Th = styled.th`
 const Td = styled.td`
     text-align: center;
 `;
+
+const ButtonStyle = styled.button`
+    float: right;
+    width: 11vh;
+    height: 4.5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: darkblue;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #0002ab;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
 
 export default QnA;

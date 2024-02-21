@@ -1,10 +1,10 @@
 // src/pages/Login.jsx
-import React ,{useState, useEffect}from 'react';
+import React ,{useState}from 'react';
 import { Link } from 'react-router-dom'; // useHistory 추가 
 import '../../css/Login.css';
-import kakao from '../../img/kakaologin.png';
+// import kakao from '../../img/kakaologin.png';
 import axios from 'axios';
-
+import Header from '../../pages/Header';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -36,78 +36,74 @@ const Login = () => {
           }
       } catch (error) {
           console.error('API 호출 중 오류:', error);
-          
+          alert('아이디 또는 비밀번호가 틀립니다..');
       }
   };
 
-  const KakaoLogin = () => {
-    const kakaoLogin = () => {
-      window.Kakao.Auth.login({
-        success: (response) => {
-          window.Kakao.API.request({
-            url: '/v2/user/me',
-            success: (response) => {
-              localStorage.setItem('isLoggedIn', true);
-              localStorage.setItem('userData', JSON.stringify(response)); // 카카오 로그인 성공 후 사용자 데이터를 localStorage에 저장
-              window.location.href = '/';
-            },
-            fail: (error) => {
-              console.error(error);
-            },
-          });
-        },
-        fail: (error) => {
-          console.error(error);
-        },
-      });
-    };
+  // const KakaoLogin = () => {
+  //   const kakaoLogin = () => {
+  //     window.Kakao.Auth.login({
+  //       success: (response) => {
+  //         window.Kakao.API.request({
+  //           url: '/v2/user/me',
+  //           success: (response) => {
+  //             localStorage.setItem('isLoggedIn', true);
+  //             localStorage.setItem('userData', JSON.stringify(response)); // 카카오 로그인 성공 후 사용자 데이터를 localStorage에 저장
+  //             window.location.href = '/';
+  //           },
+  //           fail: (error) => {
+  //             console.error(error);
+  //           },
+  //         });
+  //       },
+  //       fail: (error) => {
+  //         console.error(error);
+  //       },
+  //     });
+  //   };
 
 
-    useEffect(() => {
-      const script = document.createElement('script');
-      script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
-      script.async = true;
-      document.body.appendChild(script);
+  //   useEffect(() => {
+  //     const script = document.createElement('script');
+  //     script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+  //     script.async = true;
+  //     document.body.appendChild(script);
 
-      script.onload = () => {
-        window.Kakao.init('884e837a1529247a640be6eeb13c9982');
-      };
+  //     script.onload = () => {
+  //       window.Kakao.init('884e837a1529247a640be6eeb13c9982');
+  //     };
 
-      return () => {
-        document.body.removeChild(script);
-      };
-    }, []);
+  //     return () => {
+  //       document.body.removeChild(script);
+  //     };
+  //   }, []);
 
-    return (
-      <div className="kakaologin">
-        <button id="kakao-login-btn" onClick={kakaoLogin} >
-          <img src={kakao} style={{ width: '13px', height: '13px' }} alt="Kakao login" />
-          &nbsp; 카카오 로그인
+  //   return (
+  //     <div className="kakaologin">
+  //       <button id="kakao-login-btn" onClick={kakaoLogin} >
+  //         <img src={kakao} style={{ width: '13px', height: '13px' }} alt="Kakao login" />
+  //         &nbsp; 카카오 로그인
           
-        </button>
+  //       </button>
         
-      </div>
-    );
-  };
+  //     </div>
+  //   );
+  // };
 
   return (
     <>
+      <Header/>
       <div className="login-box">
-        <Link to="/"><h2>Bang</h2></Link> <br />
+        <h2>DWBB</h2><br/>
 
         <input type="text" id="loginid" placeholder="ID" value={username} onChange={handleUsernameChange} />
         <br />
         <input type="password" id="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
         <br />
         <button className="login" onClick={handleLogin}>로그인</button>
-        <br /><br />
+        {/* <KakaoLogin /> */}
 
-        <KakaoLogin />
-
-        <br />
-
-        <Link className="loginLink" to="singup">회원가입</Link> &nbsp;
-        <Link className="serch" to="singupserch">아이디 / 비밀번호찾기</Link>
+        <Link className="loginLink" to="singup">회원가입</Link> 
       </div>
     </>
   );

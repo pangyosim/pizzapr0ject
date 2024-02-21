@@ -8,21 +8,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.web.repo.ParkingEntity;
 import com.web.service.ParkService;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
 
 
-@Controller
+@RestController
 @PropertySource("classpath:application.properties")
 public class ParkController {
 
@@ -30,7 +27,10 @@ public class ParkController {
     private String servickey;
     @Autowired
     private ParkService ps;
-
+    @GetMapping("/getpark")
+    public List<ParkingEntity> getparking(){
+        return ps.getParkingList(new ParkingEntity());
+    }
     @GetMapping("/transpark")
     public void parking() {
 

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Wrapdiv = styled.div`
-    width: 15vh;
+    width: 20vh;
     height: 9.5vh;
     margin-top: 7vh;
-    margin-left: 3vh;
+    margin-left: 7vh;
     background-color: #aaaaaa;
     cursor: pointer;
     border-radius: 10px;

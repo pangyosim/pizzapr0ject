@@ -3,7 +3,6 @@ import React, { useEffect,useState } from 'react';
 import Header from '../pages/Header';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import BoardItem from '../components/BoardItem';
 
 const Board = () => {
@@ -17,7 +16,8 @@ const Board = () => {
     fetch('http://localhost:8080/board') 
         .then((res) => res.json()) 
         .then((res) => { 
-            const sortedBoards = res.sort((a, b) => b.boardSeq - a.boardSeq);
+            const sortedBoards = res.sort(function(a, b) {
+                return new Date(a.boardDate).getTime() - new Date(b.boardDate).getTime()}).reverse();
             setBoards(sortedBoards);
         }); 
 
@@ -34,7 +34,7 @@ const Board = () => {
         };
     
         fetchUserData();
-    }, [boards]); 
+    }, []); 
 
 
     // 현재 페이지의 게시글을 계산하는 함수
@@ -65,9 +65,9 @@ const Board = () => {
         </div>
         {userData && userData.role === 'ROLE_ADMIN' && ( // ROLE_ADMIN일 때만 버튼 표시
         <Div>
-            <Button variant="warning" style={{float:"right"}}>
+            <ButtonStyle style={{float:"right"}}>
                 <Link to ="/boardWrite" className="nav-link">글쓰기</Link>
-            </Button>
+            </ButtonStyle>
         </Div>
         )}
         <div style={{paddingBottom: "70px"}}>
@@ -103,10 +103,31 @@ const Form = styled.form`
     width: 950px;
     margin-left:auto; 
     margin-right:auto;
+    margin-top: 10vh;
 `;
 const Div = styled.div`
     padding-bottom: 70px;
 `;
+const ButtonStyle = styled.button`
+    width: 11vh;
+    height: 4.5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: darkblue;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #0002ab;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
 
 export default Board;
 

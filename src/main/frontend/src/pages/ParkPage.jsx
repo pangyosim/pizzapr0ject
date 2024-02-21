@@ -1,16 +1,16 @@
-import Map from '../components/Map';
-import Header from './Header';
+import Header from "./Header";
 import React ,{ useState } from 'react';
 import Loading from '../components/Loading'
+import Park from "../components/Park";
 
-const MapPage = () => {
+const ParkPage = () => {
     const [isloading, setisloading] = useState(false);
     setTimeout(()=>(setisloading(true)),1500);
     return(
-        <>  
+        <>
             <Header/>
-            {isloading ? <Map/> : <Loading/>}
+            {isloading ? <Park/> : <Loading/>}
         </>
     )
 }
-export default React.memo(MapPage);
+export default React.memo(ParkPage);

@@ -3,7 +3,6 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
 import styled from "styled-components";
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../pages/Header';
@@ -85,13 +84,13 @@ const QnAUpdate = () => {
             <textarea  name="qaContents" value={QnA.qaContents} onChange={changeValue} className="form-control" style={{width:"900px"}} rows="3"></textarea>
         </div>
         <Div>
-            <Button variant="primary" type="botton" onChange={changeValue}>
+            <Buttonupdate variant="primary" type="botton" onChange={changeValue}>
                 수정
-            </Button>
+            </Buttonupdate>
             &nbsp;
-            <Button variant="warning" type="botton" onChange={QnADetail}>
+            <Buttonback variant="warning" type="botton" onChange={QnADetail}>
                 뒤로
-            </Button>
+            </Buttonback>
         </Div>
     </Form>
     </>
@@ -106,5 +105,44 @@ const Div = styled.div`
     padding-top: 10px;
     text-align: center;
 `;
-
+const Buttonupdate = styled.button`
+    width: 10vh;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: #219e4a;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #23aa4f;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
+const Buttonback = styled.button`
+    width: 10vh;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    background-color: #728cd8;
+    transition: 0.1s linear;
+    text-decoration: none;
+    &:hover {
+        background-color: #7f9cef;
+        transform: scale(1.02);
+        text-decoration: none;
+    }
+`
 export default QnAUpdate;
