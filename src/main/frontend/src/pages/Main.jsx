@@ -6,7 +6,6 @@ import Bankfind from "../components/Bankfind";
 import Parkingfind from "../components/Parkingfind";
 import QA from "../components/QA";
 import CustomerService from "../components/CustomerService";
-import Sitemap from "../components/Sitemap";
 import { NavLink } from "react-router-dom";
 import Bankinfo from "../components/Bankinfo";
 
@@ -15,7 +14,7 @@ import Bankinfo from "../components/Bankinfo";
 const Wrapper = styled.div`
     width: 180vh;
     height: 680px;
-    margin: 4vh 8vh;
+    margin: 4vh 13vh;
 `;
 const WrapWaitBox = styled.div`
     float: left;
@@ -27,7 +26,7 @@ const WrapWaitBox = styled.div`
 const CenterBox = styled.div`
     margin-top: 8vh;
     float: left;
-    margin-left: 7vh;
+    margin-left: 3vh;
     width: 60vh;
     height: 700px;
     boxSizing: border-box;
@@ -38,7 +37,8 @@ const LastBox = styled.div`
     width: 45vh;
     height: 700px;
     boxSizing: border-box;
-    margin-right: 6vh;
+    margin-right: 15vh;
+    margin-top: 2vh;
 `;
 //------------------------------------------------------------------------------------------
 // wrap
@@ -48,8 +48,11 @@ const Wrapdiv = styled.div`
 `;
 
 const Navstyle = styled(NavLink)`
-    text-decoration: none;
     margin-left: 1vh;
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+    }
 `;
 
 
@@ -69,14 +72,17 @@ const Main = () => {
                         <Navstyle to="/map">
                             <Bankfind/>
                         </Navstyle>
-                        <Navstyle to="/">
+                        <Navstyle to="/park">
                             <Parkingfind/>
                         </Navstyle>
                     </Wrapdiv>
                     <Wrapdiv>
-                        <QA/>
-                        <CustomerService/>
-                        <Sitemap/>
+                        <Navstyle to="/qna">
+                            <QA/>
+                        </Navstyle>
+                        <Navstyle to="/About">
+                            <CustomerService/>
+                        </Navstyle>
                     </Wrapdiv>
                 </CenterBox>
                 <LastBox>

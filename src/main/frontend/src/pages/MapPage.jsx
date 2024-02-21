@@ -5,7 +5,7 @@ import Loading from '../components/Loading'
 
 const MapPage = () => {
     const [isloading, setisloading] = useState(false);
-    setTimeout(()=>(setisloading(true)),1000);
+    setTimeout(()=>(setisloading(true)),1500);
     return(
         <>  
             <Header/>
@@ -13,4 +13,4 @@ const MapPage = () => {
         </>
     )
 }
-export default MapPage;
+export default React.memo(MapPage);

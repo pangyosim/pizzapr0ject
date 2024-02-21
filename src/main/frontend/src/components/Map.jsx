@@ -6,14 +6,24 @@ import ibk from '../img/ibk.png';
 import locimg from '../img/location.png';
 import React from 'react';
 
+const NearSearchbox = styled.div`
+    margin: 1vh auto;
+    background-color: white;
+    width: 30vh;
+    height: 4.5vh;
+    border: 2px solid darkblue;
+    border-radius: 5px;
+`
+
 const Nearbox = styled.div`
-    padding-top: 2vh;
-    border-top: 1px solid black;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    border-bottom: 1px solid lightgray;
     width: 33vh;
-    height: 12vh;
+    height: 13vh;
     cursor: pointer;
     &:hover {
-        background-color : #f2f2f2;
+        background-color : #f0f0f3;
     }
 `;
 
@@ -29,14 +39,14 @@ const Mylocbutton = styled.button`
     background-color: white;
     position:absolute;
     top: 90vh;
-    left: 43vh;
+    left: 44vh;
     border-radius: 5px;
     z-index: 999;
     width: 4vh;
     height: 4vh;
     cursor: pointer;
     &:hover{
-        background-color: #f2f2f2;
+        background-color: #b0b0b0;
     }
 `;
 
@@ -78,9 +88,8 @@ const Map = () => {
         if( mapRef.current === null){
             mapRef.current = new naver.maps.Map('map', {
                 center: mylocation,
-                zoom: 15,
-                zoomControl: true,
-                customcontrol: true
+                zoom: 17,
+                zoomControl: true
             }) 
             setmap(mapRef.current);
         }
@@ -116,9 +125,11 @@ const Map = () => {
                                     height: 4.5vh;
                                     background: white; 
                                     border-radius: 10vh; 
-                                    border: 1.5px solid #0675f4; 
+                                    border: 2px solid #0675f4; 
                                     display: flex; 
+                                    transition: 0.1s linear;
                                     align-items: center;
+                                    margin-bottom: 3vh;
                                 } 
                                 .arr:after{ 
                                     border-top: 5px solid #0675f4;
@@ -126,11 +137,15 @@ const Map = () => {
                                     border-right: 4px solid transparent;
                                     content: "";
                                     position: absolute;
-                                    top: 40.5px;
+                                    top: 47px;
                                     left: 30px;
-                                }</style>`,
+                                }
+                                .arr:hover{
+                                    transform: scale(1.05);
+                                }
+                                </style>`,
                                 `<div class="arr">`,
-                                    ` <img src=${ibk} style="margin-left: 0.75vh; width: 2.5vh; height: 2.5vh;"/><p style="margin-left: 1vh; font-size: 12px; font-weight: bold;"> IBK기업은행 <br>${e.krnbrm}</p>`,
+                                    ` <img src=${ibk} style="margin-left: 0.75vh; width: 2.5vh; height: 2.5vh;"/><p style="margin-top: 2vh; margin-left: 1vh; font-size: 12px; font-weight: bold;"> IBK기업은행 <br>${e.krnbrm}</p>`,
                                 `</div>`
                                 ].join(''),
                             scaledSize: new naver.maps.Size(30, 50),
@@ -144,7 +159,8 @@ const Map = () => {
                 naver.maps.Event.addListener(marker, 'click', () => {
                         const data_arr = [e.krnbrm,e.brncnwbscadr,e.trwntgn1,e.waitcuscnt1,e.trwntgn2,e.waitcuscnt2,e.trwntgn3,e.waitcuscnt3,e.trwntgn4,e.waitcuscnt4,e.waitcuscnt5,e.waitcuscnt5]
                         const new_arr = data_arr.filter((element) => element != null)
-                        let content = `<div style="padding: 20px;"><div style="color: darkblue; font-weight: bold; border-bottom: 1.5px solid black; font-size: 18px; padding-bottom: 5px;">IBK기업은행</div>`
+                        console.log(new_arr)
+                        let content = `<div style="padding: 30px; width: 25vh;"><div style="color: darkblue; font-weight: bold; border-bottom: 1.5px solid black; font-size: 18px; padding-bottom: 5px;">IBK기업은행</div>`
                         if( new_arr.length > 2){
                             new_arr.map((data,idx) => {
                                 if(idx === 0){
@@ -195,38 +211,40 @@ const Map = () => {
     },[arr,loc.lat,loc.lng,map,nearlist]) // useEffect end
     console.log(nearlist)
     return(
-        <div style={{marginLeft: "3.5vh",marginTop: "4vh"}}>
-            <div style={{position: "absolute", marginLeft:"2vh"}}>
+        <div style={{marginTop: "4vh"}}>
+            <div style={{position: "absolute", height:"85vh",  zIndex:"99", backgroundColor:"white"}}>
+                <NearSearchbox></NearSearchbox>
                 {nearlist.map((e,idx) => {
                         return (
-                        <Nearbox key={idx} onClick={(e)=>{
-                            const {naver} = window
-                            e.preventDefault()
-                            const content = e.currentTarget.textContent;
-                            const x_idx = content.indexOf("geox");
-                            const y_idx = content.indexOf("geoy");
-                            const geox = content.substring(x_idx+7,y_idx)/1
-                            const geoy = content.substring(y_idx+7)/1
-                            map.setCenter(new naver.maps.LatLng(geoy,geox));
-                            map.setZoom(16)
-                        }}>
-                            <span style={{marginLeft: "2.5vh",fontSize: "18px", color: "darkblue",fontWeight:"bold"}}>IBK기업은행</span><br></br>
-                            <Nearspan>{e.krnbrm}지점</Nearspan><br></br>
-                            <Nearspan>{e.brncnwbscadr}</Nearspan><br></br>
-                            <Nearspan style={{fontWeight: "bold"}}>거리 {Math.round(e.distance * 100)/100.0} km</Nearspan>
-                            <div style={{display:"none"}}> geox : {e.geox}</div>
-                            <div style={{display:"none"}}> geoy : {e.geoy}</div>
-                        </Nearbox>
+                            <Nearbox key={idx} onClick={(e)=>{
+                                const {naver} = window
+                                e.preventDefault()
+                                const content = e.currentTarget.textContent;
+                                const x_idx = content.indexOf("geox");
+                                const y_idx = content.indexOf("geoy");
+                                const geox = content.substring(x_idx+7,y_idx)/1
+                                const geoy = content.substring(y_idx+7)/1
+                                map.setCenter(new naver.maps.LatLng(geoy,geox));
+                                map.setZoom(17)
+                            }}>
+                                <span style={{marginLeft: "2.5vh",fontSize: "18px", color: "darkblue",fontWeight:"bold"}}>IBK기업은행</span><br></br>
+                                <Nearspan>{e.krnbrm}지점</Nearspan><br></br>
+                                <Nearspan>{e.brncnwbscadr}</Nearspan><br></br>
+                                <Nearspan style={{fontWeight: "bold"}}>거리 {Math.round(e.distance * 100)/100.0} km</Nearspan>
+                                <div style={{display:"none"}}> geox : {e.geox}</div>
+                                <div style={{display:"none"}}> geoy : {e.geoy}</div>
+                            </Nearbox>
                 )})}
             </div>
             <Mylocbutton onClick={(e)=> {
                     const {naver} = window
                     e.preventDefault()
                     map.setCenter(new naver.maps.LatLng(loc.lat,loc.lng))
+                    map.setZoom(17)
                  }}>
-                <img src={locimg} style={{width:"3vh", height:"3vh",marginTop:"0.5vh",color:"#0675f4"}} alt="myloc"></img>
+                <img src={locimg} style={{width:"3vh", height:"3vh",color:"#0675f4"}} alt="myloc"></img>
             </Mylocbutton>
-            <div id='map' style={{ float:"right",width: "150vh", height: '85vh', marginRight: "8vh"}}/>
+            <div id='map' style={{width: "100%", height: '85vh'}}/>
         </div>
     );
     

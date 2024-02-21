@@ -10,12 +10,12 @@
     left: 0;
     transition: 0.4s ease;
     height: 100%;
-    z-index: 99;
+    z-index: 999;
   }
   .button {
     position: relative;
     left: 43vh; 
-    top: 3vh;
+    top: 4vh;
     width: 5vh;
     height: 4vh;
     z-index: 99;

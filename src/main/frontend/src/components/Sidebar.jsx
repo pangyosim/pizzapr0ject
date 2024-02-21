@@ -42,7 +42,7 @@ const Sidebar = ({ width=280, children }) => {
           <button onClick={() => toggleMenu()}
           className={styles.button} >
             {isOpen ? 
-                <span style={{fontSize: "40px", fontWeight: "bold"}}>×</span> : <img src={category} alt="contact open button" className={styles.openBtn}/>
+                <span style={{fontSize: "30px", fontWeight: "bold"}}>×</span> : <img src={category} alt="contact open button" className={styles.openBtn}/>
             }
           </button>
         

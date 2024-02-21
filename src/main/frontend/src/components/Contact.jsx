@@ -21,6 +21,11 @@ const Menucontent = styled.a`
 const Contact = () => {
     return(
         <div style={{width:"35vh", height:"80vh"}}>
+            <Menutitle>안내</Menutitle>
+            <hr></hr>
+            <Menucontent href="/board">공지사항</Menucontent><br></br>
+            <Menucontent href="/qna"> Q&A</Menucontent>
+            <br></br><br></br><br></br><br></br>
             <Menutitle>은행</Menutitle>
             <hr></hr>
             <Menucontent href="/map">내 근처 은행</Menucontent>
@@ -28,7 +33,7 @@ const Contact = () => {
             
             <Menutitle>주차장</Menutitle>
             <hr></hr>
-            <Menucontent href="/">내 근처 주차장</Menucontent>
+            <Menucontent href="/park">내 근처 주차장</Menucontent>
         </div>
     )
 }

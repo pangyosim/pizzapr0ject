@@ -9,7 +9,7 @@ const Bankbox = styled.div`
     width: 45vh;
     height: 100px;
     background-color: #2c3d50;
-    margin-top: 1.3vh;
+    margin-top: 1vh;
     cursor: pointer;
     transition: 0.1s linear;
     &:hover{
@@ -21,7 +21,7 @@ const Bankbox = styled.div`
 const Wrapimg = styled.div`
     float: left;
     boxSizing: border-box;
-    margin: 4.5vh 2vh;
+    margin: 4vh 2vh;
 `;
 
 const BankStateimg = styled.img`
@@ -32,7 +32,7 @@ const BankStateimg = styled.img`
 const Wrapinfo = styled.div`
     float: left;
     boxSizing: border-box;
-    margin-top: 2vh;
+    margin-top: 1.5vh;
 `;
 
 const Bankinfospan = styled.span`
@@ -99,6 +99,11 @@ const Bankinfo = () => {
             .then(response => {setavgarr(response.data);})
             .catch((error) => {console.log("avgarr 요청중 에러발생,,,", error)})
         }
+        console.log('arr : '+ arr)
+        console.log(arr.length)
+        console.log('avgarr : ' + avgarr)
+        console.log(avgarr.length)
+    
         var near_list = []
         if( loc.lat !== 0 ){
             arr.forEach((e)=>{
@@ -111,7 +116,8 @@ const Bankinfo = () => {
             if(nearlist.length === 0){
                 setnearlist(near_list.sort((a,b) => a.distance - b.distance).slice(0,5));
             }
-        }       
+        }
+        //console.log('sort list : '+near_list.sort((a,b) => a.distance - b.distance).slice(0,5))
         // Haversine formula
         function distance(lat1, lon1, lat2, lon2) {
             const R = 6371; 
@@ -129,6 +135,9 @@ const Bankinfo = () => {
         }
         // Haversine formula end
     },[arr,nearlist.length,avgarr,loc.lat,loc.lng])
+
+    //console.log('nearlist : ' + nearlist)
+
     return(
         <>
             {loading ? nearlist.map((e) => {
