@@ -2,6 +2,7 @@ application.properties
 .idea
 .mvn
 .metadata
+.DS_Store
 
 # dependencies
 /node_modules
