@@ -1,5 +1,7 @@
 application.properties
-
+.idea
+.mvn
+.metadata
 
 # dependencies
 /node_modules
