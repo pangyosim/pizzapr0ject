@@ -1,4 +1,4 @@
-![image](https://github.com/pangyosim/pizzapr0ject/assets/87213815/081b8ed3-f34a-4297-99b1-983a53df993a)
+
 > 프로젝트 URL : &nbsp; 배포 준비중...
 
 ---
